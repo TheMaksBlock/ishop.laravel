@@ -6,13 +6,13 @@
     <div id="top" class="callbacks_container">
         <ul class="rslides" id="slider4">
             <li>
-                <img src="/images/bnr-1.jpg" alt=""/>
+                <img src="{{ asset('images/bnr-1.jpg')}}" alt=""/>
             </li>
             <li>
-                <img src="/images/bnr-2.jpg" alt=""/>
+                <img src="{{ asset('images/bnr-2.jpg')}}" alt=""/>
             </li>
             <li>
-                <img src="/images/bnr-3.jpg" alt=""/>
+                <img src="{{ asset('images/bnr-3.jpg')}}" alt=""/>
             </li>
         </ul>
     </div>
@@ -23,13 +23,11 @@
 <!--End-slider-script-->
 <!--about-starts-->
 
-
-{{--if ($brands): ?>
+@if ($brands)
 <div class="about">
     <div class="container">
         <div class="about-top grid-1">
-                <?php
-            foreach ($brands as $brand): ?>
+            @foreach ($brands as $brand)
             <div class="col-md-4 about-left">
 
                 <figure class="effect-bubba">
@@ -40,19 +38,17 @@
                     </figcaption>
                 </figure>
             </div>
-            <?php
-            endforeach; ?>
+            @endforeach
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
-<?php
-endif; ?>
-    <!--about-end-->
+@endif
+<!--about-end-->
 <!--product-starts-->
-<?php
-if ($hits): ?>
-    <?php $curr = App::$app->getProperty('currency')?>
+@dump($hits)
+
+@if ($hits)
 <div class="product">
     <div class="container">
         <div class="product-top">
@@ -67,12 +63,20 @@ if ($hits): ?>
                         <div class="product-bottom">
                             <h3><?= $hit->title ?></h3>
                             <p>Explore Now</p>
-                            <h4><a data-id ="<?=$hit->id?>" class="add-to-cart-link" href="/cart/add?id=<?= $hit->id ?>"><i></i></a> <span
+
+                            <h4><a data-id ="<?=$hit->id?>" class="add-to-cart-link" href="/cart/add?id=<?= $hit->id ?>"><i></i></a>
+                                <span class=" item_price"><?=$hit->price?></span>
+                                    @if ($hit->old_price)
+                                        <small><del><?=$hit->old_price?></del></small>
+                                    @endif
+                            </h4>
+
+                            {{--<h4><a data-id ="<?=$hit->id?>" class="add-to-cart-link" href="/cart/add?id=<?= $hit->id ?>"><i></i></a> <span
                                     class=" item_price"><?=$curr['symbol_left']?><?=$hit->price*$curr['value']?><?=$curr['symbol_right']?></span>
                                     <?php if ($hit->old_price): ?>
                                 <small><del><?=$curr['symbol_left']?><?=$hit->old_price*$curr['value']?><?=$curr['symbol_right']?></del></small>
                                 <?php endif?>
-                            </h4>
+                            </h4>--}}
                         </div>
                             <?php if ($hit->old_price): ?>
                         <div class="srch">
@@ -90,7 +94,7 @@ if ($hits): ?>
         </div>
     </div>
 </div>
-<?php
-endif; ?>--}}
+
+@endif
     <!--product-end-->
 @endsection('content')

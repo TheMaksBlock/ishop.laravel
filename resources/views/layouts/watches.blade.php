@@ -3,7 +3,7 @@
 <head>
     <base href="/">
     <link rel="shortcut icon" href="{{ asset('images/star.png')}}" type="image/png">
-    <title>@yeld('title')</title>
+    <title>@yield('title')</title>
     <link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{ asset('megamenu/css/ionicons.min.css" rel="stylesheet')}}" type="text/css" media="all" />
     <link href="{{ asset('megamenu/css/style.css')}} rel="stylesheet" type="text/css" media="all" />
@@ -21,23 +21,23 @@
         <div class="top-header-main">
             <div class="col-md-6 top-header-left">
                 <div class="drop">
-                    {{--<div class="box">
+                    <div class="box">
                         <select id="currency" tabindex="4" class="dropdown drop">
-                            <?php new \app\widgets\currency\Currency(); ?>
+
                         </select>
                     </div>
                     <div class="btn-group">
                         <a class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <?php if(!empty($_SESSION['user'])): ?>
+                            {{--<?php if(!empty($_SESSION['user'])): ?>
                             <li><a href="#">Добро пожаловать, <?=h($_SESSION['user']['name']);?></a></li>
                             <li><a href="user/logout">Выход</a></li>
                             <?php else: ?>
                             <li><a href="user/login">Вход</a></li>
                             <li><a href="user/signup">Регистрация</a></li>
-                            <?php endif; ?>
+                            <?php endif; ?>--}}
                         </ul>
-                    </div>--}}
+                    </div>
 
 
 
@@ -67,7 +67,7 @@
 <!--top-header-->
 <!--start-logo-->
 <div class="logo">
-    {{--<a href=<?=PATH?>><h1>Luxury Watches</h1></a>--}}
+    <a href="{{route('index')}}}"><h1>Luxury Watches</h1></a>
 </div>
 <!--start-logo-->
 <!--bottom-header-->
