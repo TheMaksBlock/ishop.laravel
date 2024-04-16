@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attribute_group', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+             $table->string('title');
             $table->timestamps();
         });
     }

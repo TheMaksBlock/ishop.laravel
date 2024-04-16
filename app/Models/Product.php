@@ -9,4 +9,13 @@ class Product extends Model
 {
     use HasFactory;
     protected $table = 'product';
+
+    public function related(){
+        return $this->belongsTo(RelatedProduct::class);
+    }
+
+    public function relatedProducts()
+    {
+        return $this->hasMany(RelatedProduct::class, 'product_id', 'id');
+    }
 }

@@ -15,6 +15,6 @@ class MainController extends Controller
             ->take(8)
             ->get();
 
-        return view('index', compact("brands", "hits"));
+        return view('main.index', compact("brands", "hits"));
     }
 }

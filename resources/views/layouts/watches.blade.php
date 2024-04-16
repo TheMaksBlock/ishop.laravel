@@ -67,7 +67,7 @@
 <!--top-header-->
 <!--start-logo-->
 <div class="logo">
-    <a href="{{route('index')}}}"><h1>Luxury Watches</h1></a>
+    <a href="{{route('main.index')}}}"><h1>Luxury Watches</h1></a>
 </div>
 <!--start-logo-->
 <!--bottom-header-->
