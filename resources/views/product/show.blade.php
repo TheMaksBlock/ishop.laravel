@@ -6,7 +6,7 @@
     <div class="container">
         <div class="breadcrumbs-main">
             <ol class="breadcrumb">
-                <?php /*= $breadCrumbs */?>
+                {!! $breadCrumbs !!}
             </ol>
         </div>
     </div>
@@ -224,7 +224,7 @@
                     </div>
                     @endif
                 </div>
-                {{--<div class="resentlyProducts">
+                <div class="resentlyProducts">
                     <?php
                     if ($recentlyViewed): ?>
                     <div class="product-one">
@@ -238,26 +238,26 @@
                                         src="/images/<?= $product['img'] ?>" alt=""/></a>
                                 <div class="product-bottom">
                                     <h3><a href="/product/<?= $product['alias'] ?>"><?= $product['title'] ?></a>
-                                    --}}{{--</h3>
+                                    </h3>
                                     <p>Explore Now</p>
                                     <h4><a data-id="<?= $product->id ?>" class="add-to-cart-link"
                                            href="/cart/add?id=<?= $product['id'] ?>"><i></i></a> <span
-                                            class=" item_price"><?= $curr['symbol_left'] ?><?= $product['price'] * $curr['value'] ?><?= $curr['symbol_right'] ?></span>
+                                            {{--class=" item_price"><?= $curr['symbol_left'] ?><?= $product['price'] * $curr['value'] ?><?= $curr['symbol_right'] ?></span>
                                             <?php
                                         if ($product['old_price']): ?>
                                         <small>
                                             <del><?= $curr['symbol_left'] ?><?= $product['old_price'] * $curr['value'] ?><?= $curr['symbol_right'] ?></del>
-                                        </small>
+                                        </small>--}}
                                         <?php
-                                        endif ?>
+/*                                        endif */?>
                                     </h4>
-                                        <?php--}}{{--
+                                       {{-- <?php
                                     @if ($product['old_price']): ?>
                                     <div class="srch">
                                         <span>-<?= round((1 - $product['price'] / $product['old_price']) * 100) ?>%</span>
                                     </div>
 
-                                    @endif
+                                    @endif--}}
                                 </div>
                             </div>
                         </div>
@@ -266,7 +266,7 @@
                     </div>
 
                     @endif
-                </div>--}}
+                </div>
             </div>
 
             <div class="clearfix"></div>
