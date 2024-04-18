@@ -9,7 +9,10 @@ class BreadCrumbsService {
 
     public function getBreadCrumbs($categoryId, $name = '') {
 
-        if(is_null(Cache::get("cats"))){
+        if(Cache::has("cats")) {
+            $cats = Cache::get("cats");
+        }
+        else {
             $cats = Category::all()->mapWithKeys(function ($category) {
                 return [$category['id'] => [
                     'alias' => $category['alias'],
@@ -19,9 +22,6 @@ class BreadCrumbsService {
             })->toArray();
 
             Cache::put("cats", $cats, now()->addHours(24));
-        }
-        else{
-            $cats = Cache::get("cats");
         }
 
 

@@ -1,3 +1,4 @@
+@php use App\Services\CurrencyService; @endphp
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
                 <div class="drop">
                     <div class="box">
                         <select id="currency" tabindex="4" class="dropdown drop">
-
+                            {!! $currencyWidget !!}
                         </select>
                     </div>
                     <div class="btn-group">
@@ -67,7 +68,7 @@
 <!--top-header-->
 <!--start-logo-->
 <div class="logo">
-    <a href="{{route('main.index')}}}"><h1>Luxury Watches</h1></a>
+    <a href="{{ route('main.index') }}"><h1>Luxury Watches</h1></a>
 </div>
 <!--start-logo-->
 <!--bottom-header-->

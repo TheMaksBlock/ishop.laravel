@@ -46,7 +46,6 @@
 @endif
 <!--about-end-->
 <!--product-starts-->
-@dump($hits)
 
 @if ($hits)
 <div class="product">

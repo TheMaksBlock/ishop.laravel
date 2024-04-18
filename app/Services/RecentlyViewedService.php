@@ -9,15 +9,16 @@ class RecentlyViewedService {
 
     public function setRecentlyViewed($id)
     {
-        $recentlyViewed = $this->getAllRecentlyViewed();
+        $recentlyViewed = Cookie::get("recentlyViewed");;
         if(!$recentlyViewed){
-            $this->setCookie($id);
+            Cookie::queue('recentlyViewed', $id, 60*24);
         }
         else{
             $recentlyViewed = explode(',', $recentlyViewed);
             if(!in_array($id, $recentlyViewed)){
                 $recentlyViewed[] = $id;
-                $this->setCookie(implode(',', $recentlyViewed));
+
+                Cookie::queue('recentlyViewed', implode(',', $recentlyViewed), 60*24);
             }
         }
     }
@@ -40,13 +41,6 @@ class RecentlyViewedService {
         }
     }
 
-    public function getAllRecentlyViewed()
-    {
-        return Cookie::get("recentlyViewed");
-    }
 
-    protected function setCookie($value)
-    {
-        Cookie::queue('recentlyViewed', $value, 60*24);
-    }
+
 }

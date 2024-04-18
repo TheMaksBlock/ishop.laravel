@@ -7,19 +7,23 @@ use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\RelatedProduct;
 use App\Services\BreadCrumbsService;
+use App\Services\CurrencyService;
 use App\Services\RecentlyViewedService;
-use http\Cookie;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+
 
 
 class ProductController extends Controller
 {
     private $recentlyViewedService;
     private $breadCrumbsService;
-    public function __construct(RecentlyViewedService $recentlyViewedService, BreadCrumbsService $breadCrumbsService) {
+    private $currencyService;
+
+    public function __construct(RecentlyViewedService $recentlyViewedService,
+                                BreadCrumbsService $breadCrumbsService,
+                                CurrencyService $currencyService) {
         $this->recentlyViewedService = $recentlyViewedService;
         $this->breadCrumbsService = $breadCrumbsService;
+        $this->currencyService = $currencyService;
     }
 
     public function show(Product $product){
@@ -32,10 +36,10 @@ class ProductController extends Controller
         }
 
         $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts();
-        $this->recentlyViewedService->setRecentlyViewed($product->id);
-
         $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($product->id);
+        $currencyWidget = $this->currencyService->getHtml();
 
-        return view('product.show', compact("product", "gallery","related", "recentlyViewed", "breadCrumbs"));
+        return view('product.show', compact("product",
+            "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget"));
     }
 }
