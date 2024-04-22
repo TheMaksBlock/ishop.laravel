@@ -27,7 +27,7 @@ class ProductController extends Controller
     }
 
     public function show(Product $product){
-        $gallery = Gallery::find($product->id);
+        $gallery = Gallery::where('product_id',$product->id)->get();
 
         $relatedProducts = $product->relatedProducts()->get();
         $related = [];

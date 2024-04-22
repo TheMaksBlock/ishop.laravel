@@ -18,15 +18,14 @@
             <div class="single-main">
                 <div class="col-md-9 single-main-left">
                     <div class="sngl-top">
-
-                        @if (!isNull($gallery))
-                            : ?>
+                        <?php xdebug_break() ?>
+                        @if ($gallery)
                             <div class="col-md-5 single-top-left">
                                 <div class="flexslider">
                                     <ul class="slides">
                                         @foreach ($gallery as $item)
-                                            <li data-thumb="/images/<?= $item->img; ?>">
-                                                <div class="thumb-image"><img src="/images/<?= $item->img; ?>"
+                                            <li data-thumb="/images/{{$item->img}}">
+                                                <div class="thumb-image"><img src="/images/{{$item->img}} ?>"
                                                                               data-imagezoom="true"
                                                                               class="img-responsive"
                                                                               alt=""/></div>
@@ -37,7 +36,7 @@
                             </div>
                         @else
                             <div class="col-md-3 single-top-left">
-                                <img src="/images/<?= $product->img; ?>" alt="">
+                                <img src="/images/{{$product->img}}" alt="">
                             </div>
                         @endif
 
@@ -213,7 +212,6 @@
                             <div class="product-one">
                                 <h3> С этим товаром также покупают:</h3>
                                 @foreach ($related as $rel)
-                                    :
                                     <div class="col-md-3 product-left">
                                         <div class="product-main simpleCart_shelfItem">
                                             <a href="/product/{{ $rel->alias }}" class="mask">

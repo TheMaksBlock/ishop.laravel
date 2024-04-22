@@ -3,4 +3,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\MainController@index')->name('main.index');
+Route::get('/currency/change/{code}', 'App\Http\Controllers\CurrencyController@change')->name('currency.change');
 Route::get('/product/{product:alias}', 'App\Http\Controllers\ProductController@show')->name('product.show');

@@ -1,16 +1,16 @@
 /* Search */
-var products = new Bloodhound({
+/*var products = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
         wildcard: '%QUERY',
         url: path + '/search/typeahead?query=%QUERY'
     }
-});
+});*/
 
-products.initialize();
+/*products.initialize();*/
 
-$("#typeahead").typeahead({
+/*$("#typeahead").typeahead({
     // hint: false,
     highlight: true
 },{
@@ -25,7 +25,7 @@ $('#typeahead').bind('typeahead:select', function(ev, suggestion) {
     window.location = path + '/search/?s=' + encodeURIComponent(suggestion.title);
 });
 
-/*Cart*/
+/!*Cart*!/
 $('body').on('click','.add-to-cart-link', function(e) {
     e.preventDefault();
     var id = $(this).data('id'),
@@ -103,15 +103,14 @@ $('#cart .modal-body').on('click','.del-item', function (){
         }
     })
 })
-/*Cart*/
+/!*Cart*!/*/
 
 
 $('#currency').change(function(){
-    window.location = '/currency/change?curr=' + $(this).val();
-
+    window.location = '/currency/change/' + $(this).val();
 });
 
-$('.available select').on('change', function(){
+/*$('.available select').on('change', function(){
     var modId = $(this).val(),
         color = $(this).find('option').filter(':selected').data('title'),
         price = $(this).find('option').filter(':selected').data('price'),
@@ -124,7 +123,7 @@ $('.available select').on('change', function(){
     }
 });
 
-/*filters*/
+/!*filters*!/
 $('body').on('change', '.w_sidebar input', function(){
     var checked = $('.w_sidebar input:checked'),
         data = '';
@@ -163,4 +162,4 @@ $('body').on('change', '.w_sidebar input', function(){
         window.location = location.pathname;
     }
 });
-/*filters*/
+/!*filters*!/*/
