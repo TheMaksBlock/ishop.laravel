@@ -35,11 +35,13 @@ class ProductController extends Controller
             $related[] = $prod->related;
         }
 
-        $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts();
+        $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts($product->id);
+        $this->recentlyViewedService->setRecentlyViewed($product->id);
         $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($product->id);
         $currencyWidget = $this->currencyService->getHtml();
+        $currency = $this->currencyService->currency;
 
         return view('product.show', compact("product",
-            "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget"));
+            "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget", "currency"));
     }
 }

@@ -19,13 +19,13 @@ class MainController extends Controller
 
     public function index(){
         $brands = Brand::take(3)->get();
-        $hits =Product::where('hit', 1)
+        $hits =Product::where('hit','1')
             ->where('status', "1")
             ->take(8)
             ->get();
 
-
         $currencyWidget = $this->currencyService->getHtml();
-        return view('main.index', compact("brands", "hits", "currencyWidget"));
+        $currency = $this->currencyService->currency;
+        return view('main.index', compact("brands", "hits", "currencyWidget", "currency"));
     }
 }

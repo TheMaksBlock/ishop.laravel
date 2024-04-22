@@ -52,44 +52,37 @@
     <div class="container">
         <div class="product-top">
             <div class="product-one">
-                    <?php
-                foreach ($hits as $hit): ?>
-                <div class="col-md-3 product-left">
-                    <div class="product-main simpleCart_shelfItem">
-                        <a href="/product/<?= $hit->alias; ?>" class="mask"><img class="img-responsive zoom-img"
-                                                                                 src="/images/<?= $hit->img ?>"
-                                                                                 alt=""/></a>
-                        <div class="product-bottom">
-                            <h3><?= $hit->title ?></h3>
-                            <p>Explore Now</p>
+                @foreach ($hits as $hit)
+                    <div class="col-md-3 product-left">
+                        <div class="product-main simpleCart_shelfItem">
+                            <a href="/product/{{ $hit->alias }}" class="mask">
+                                <img class="img-responsive zoom-img" src="/images/{{ $hit->img }}" alt=""/>
+                            </a>
+                            <div class="product-bottom">
+                                <h3>{{ $hit->title }}</h3>
+                                <p>Explore Now</p>
 
-                            <h4><a data-id ="<?=$hit->id?>" class="add-to-cart-link" href="/cart/add?id=<?= $hit->id ?>"><i></i></a>
-                                <span class=" item_price"><?=$hit->price?></span>
+                                <h4>
+                                    <a data-id="{{ $hit->id }}" class="add-to-cart-link" href="/cart/add?id={{ $hit->id }}">
+                                        <i></i>
+                                    </a>
+                                    <span class="item_price">{{$currency['symbol_left'].$hit->price .$currency['symbol_right']}}</span>
                                     @if ($hit->old_price)
-                                        <small><del><?=$hit->old_price?></del></small>
+                                        <small><del>{{ $currency['symbol_left'].$hit->old_price.$currency['symbol_right'] }}</del></small>
                                     @endif
-                            </h4>
-
-                            {{--<h4><a data-id ="<?=$hit->id?>" class="add-to-cart-link" href="/cart/add?id=<?= $hit->id ?>"><i></i></a> <span
-                                    class=" item_price"><?=$curr['symbol_left']?><?=$hit->price*$curr['value']?><?=$curr['symbol_right']?></span>
-                                    <?php if ($hit->old_price): ?>
-                                <small><del><?=$curr['symbol_left']?><?=$hit->old_price*$curr['value']?><?=$curr['symbol_right']?></del></small>
-                                <?php endif?>
-                            </h4>--}}
+                                </h4>
+                            </div>
+                            @if ($hit->old_price)
+                                <div class="srch">
+                                    <span>-{{ round((1 - $hit->price / $hit->old_price) * 100) }}%</span>
+                                </div>
+                            @endif
                         </div>
-                            <?php if ($hit->old_price): ?>
-                        <div class="srch">
-                            <span>-<?= round((1- $hit->price/$hit->old_price)*100) ?>%</span>
-                        </div>
-                        <?php endif;?>
                     </div>
-                </div>
-                <?php
-                endforeach; ?>
+                @endforeach
+
                 <div class="clearfix"></div>
-
             </div>
-
         </div>
     </div>
 </div>

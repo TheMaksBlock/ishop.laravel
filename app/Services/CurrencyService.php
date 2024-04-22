@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 class CurrencyService {
     protected $tpl;
     protected $currencies;
-    protected $currency;
+    public $currency;
 
     public function __construct() {
         $this->tpl = 'templates.currency_tpl';
@@ -40,6 +40,7 @@ class CurrencyService {
         return Currency::all()->sortByDesc("base")->mapWithKeys(function ($category) {
             return [$category['code'] => [
                 'code' => $category['code'],
+                'value' => $category['value'],
                 'id' => $category['id'],
                 'title' => $category['title'],
                 'symbol_left' => $category['symbol_left'],
