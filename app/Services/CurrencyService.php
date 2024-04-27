@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Currency;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Cache;
 
 class CurrencyService {
     protected $tpl;
@@ -16,26 +16,16 @@ class CurrencyService {
     }
 
     protected function run() {
-        $currencies = unserialize(Cookie::get('Currencies'));
-        if(!$currencies){
-            $this->currencies = $this->getCurrencies();
-            Cookie::queue('Currencies', serialize($this->currencies), 60*24);
-        }else{
-            $this->currencies = unserialize(Cookie::get('Currencies'));
-        }
+        $this->currencies = Cache::remember('Currencies', 60 * 24, function () {
+            return $this->getCurrencies();
+        });
 
-        $currency = unserialize(Cookie::get('Currency'));
-
-        if(!$currency){
-            $this->currency = $this->getCurrency($this->currencies);
-            Cookie::queue('Currency', serialize($this->currencies), 60*24);
-        }else{
-            $this->currency = unserialize(Cookie::get('Currency'));
-        }
+        $this->currency = Cache::remember('Currency', 60 * 24, function () {
+            return $this->getCurrency($this->currencies);
+        });
     }
 
     public function getCurrencies() {
-
         return Currency::all()->sortByDesc("base")->mapWithKeys(function ($category) {
             return [$category['code'] => [
                 'code' => $category['code'],
@@ -50,10 +40,11 @@ class CurrencyService {
     }
 
     public function getCurrency($currencies) {
-        if (Cookie::has('currency') && array_key_exists(unserialize(Cookie::get('currency')), $currencies)) {
-            $key = unserialize(Cookie::get('currency'));
-        } else {
+        $key = Cache::get('Currency', null);
+
+        if (!$key || !array_key_exists($key, $currencies)) {
             $key = key($currencies);
+            Cache::put('Currency', $key, 60 * 24);
         }
 
         $currency = $currencies[$key];

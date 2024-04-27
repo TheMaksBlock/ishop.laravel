@@ -3,28 +3,28 @@
 namespace App\Services;
 
 use App\Models\Product;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Cache;
 
 class RecentlyViewedService {
 
     public function setRecentlyViewed($id)
     {
-        $recentlyViewed = Cookie::get("recentlyViewed");;
+        $recentlyViewed = Cache::get('recentlyViewed');
         if(!$recentlyViewed){
-            Cookie::queue('recentlyViewed', $id, 60*24);
+            Cache::put('recentlyViewed', $id, 60 * 24);
         }
         else{
             $recentlyViewed = explode(',', $recentlyViewed);
             if(!in_array($id, $recentlyViewed)){
                 $recentlyViewed[] = $id;
-                Cookie::queue('recentlyViewed', implode(',', $recentlyViewed), 60*24);
+                Cache::put('recentlyViewed', implode(',', $recentlyViewed), 60 * 24);
             }
         }
     }
 
     public function getRecentlyViewed($id)
     {
-        $recentlyViewed = Cookie::get('recentlyViewed');
+        $recentlyViewed = Cache::get('recentlyViewed');
         if(!empty($recentlyViewed)){
             $recentlyViewed = explode(',', $recentlyViewed);
 
