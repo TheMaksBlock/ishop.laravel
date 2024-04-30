@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class BreadCrumbsService {
 
@@ -13,17 +14,9 @@ class BreadCrumbsService {
             $cats = Cache::get("cats");
         }
         else {
-            $cats = Category::all()->mapWithKeys(function ($category) {
-                return [$category['id'] => [
-                    'alias' => $category['alias'],
-                    'title' => $category['title'],
-                    'parent_id' => $category['parent_id'],
-                ]];
-            })->toArray();
-
+            $cats = DB::table("Category")->get()->keyBy('id')->toArray();
             Cache::put("cats", $cats, now()->addHours(24));
         }
-
 
         $breadCrumbsArray = self::getParts($cats, $categoryId);
         $breadCrumbs = "<li><a href='" . route("main.index") . "'>Главная</a> </li>";
@@ -43,8 +36,8 @@ class BreadCrumbsService {
             return false;
         $breadCrumbs = [];
         while (isset($cats[$categoryId])) {
-            $breadCrumbs[$cats[$categoryId]['alias']] = $cats[$categoryId]['title'];
-            $categoryId = $cats[$categoryId]['parent_id'];
+            $breadCrumbs[$cats[$categoryId]->alias] = $cats[$categoryId]->title;
+            $categoryId = $cats[$categoryId]->parent_id;
         }
         return array_reverse($breadCrumbs);
     }

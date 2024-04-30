@@ -37,7 +37,7 @@ class ProductController extends Controller
 
         $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts($product->id);
         $this->recentlyViewedService->setRecentlyViewed($product->id);
-        $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($product->id);
+        $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($product->category_id, $product->title);
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
 
