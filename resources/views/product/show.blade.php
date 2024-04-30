@@ -18,13 +18,14 @@
             <div class="single-main">
                 <div class="col-md-9 single-main-left">
                     <div class="sngl-top">
+                        <?php xdebug_break()?>
                         @if (!$gallery->isEmpty())
                             <div class="col-md-5 single-top-left">
                                 <div class="flexslider">
                                     <ul class="slides">
                                         @foreach ($gallery as $item)
                                             <li data-thumb="/images/{{$item->img}}">
-                                                <div class="thumb-image"><img src="/images/{{$item->img}} ?>"
+                                                <div class="thumb-image"><img src="{{ asset('images/'.$item->img)}}"
                                                                               data-imagezoom="true"
                                                                               class="img-responsive"
                                                                               alt=""/></div>
@@ -35,7 +36,7 @@
                             </div>
                         @else
                             <div class="col-md-3 single-top-left">
-                                <img src="/images/{{$product->img}}" alt="">
+                                <img src="{{ asset('images/'.$product->img)}}" alt="">
                             </div>
                         @endif
 
