@@ -18,8 +18,7 @@
             <div class="single-main">
                 <div class="col-md-9 single-main-left">
                     <div class="sngl-top">
-                        <?php xdebug_break() ?>
-                        @if ($gallery)
+                        @if (!$gallery->isEmpty())
                             <div class="col-md-5 single-top-left">
                                 <div class="flexslider">
                                     <ul class="slides">
