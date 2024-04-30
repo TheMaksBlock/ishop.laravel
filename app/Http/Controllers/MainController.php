@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Services\BreadCrumbsService;
+use App\Services\CategoriesMenuService;
 use App\Services\CurrencyService;
 use App\Services\RecentlyViewedService;
 use Illuminate\Http\Request;
@@ -12,9 +13,11 @@ use Illuminate\Http\Request;
 class MainController extends Controller
 {
     private $currencyService;
+    private $categoriesMenuService;
 
-    public function __construct(CurrencyService $currencyService) {
+    public function __construct(CurrencyService $currencyService, CategoriesMenuService $categoryMenu) {
         $this->currencyService = $currencyService;
+        $this->categoriesMenuService = $categoryMenu;
     }
 
     public function index(){
@@ -26,6 +29,7 @@ class MainController extends Controller
 
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
-        return view('main.index', compact("brands", "hits", "currencyWidget", "currency"));
+        $menu = $this->categoriesMenuService->get();
+        return view('main.index', compact("brands", "hits", "currencyWidget", "currency", "menu"));
     }
 }

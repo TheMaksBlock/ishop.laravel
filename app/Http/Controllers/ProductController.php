@@ -7,6 +7,7 @@ use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\RelatedProduct;
 use App\Services\BreadCrumbsService;
+use App\Services\CategoriesMenuService;
 use App\Services\CurrencyService;
 use App\Services\RecentlyViewedService;
 
@@ -17,13 +18,15 @@ class ProductController extends Controller
     private $recentlyViewedService;
     private $breadCrumbsService;
     private $currencyService;
+    private $categoriesMenuService;
 
     public function __construct(RecentlyViewedService $recentlyViewedService,
                                 BreadCrumbsService $breadCrumbsService,
-                                CurrencyService $currencyService) {
+                                CurrencyService $currencyService, CategoriesMenuService $categoryMenu) {
         $this->recentlyViewedService = $recentlyViewedService;
         $this->breadCrumbsService = $breadCrumbsService;
         $this->currencyService = $currencyService;
+        $this->categoriesMenuService = $categoryMenu;
     }
 
     public function show(Product $product){
@@ -40,8 +43,8 @@ class ProductController extends Controller
         $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($product->category_id, $product->title);
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
-
+        $menu = $this->categoriesMenuService->get();
         return view('product.show', compact("product",
-            "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget", "currency"));
+            "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget", "currency","menu"));
     }
 }

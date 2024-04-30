@@ -7,7 +7,7 @@
     <title>@yield('title')</title>
     <link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{ asset('megamenu/css/ionicons.min.css" rel="stylesheet')}}" type="text/css" media="all" />
-    <link href="{{ asset('megamenu/css/style.css')}} rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('megamenu/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('css/flexslider.css')}}" type="text/css" media="screen" />
     <!--theme-style-->
     <link href="{{ asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
@@ -78,9 +78,7 @@
             <div class="col-md-9 header-left">
                 <div class="menu-container">
                     <div class="menu">
-                       {{-- <?php new \app\widgets\menu\Menu([
-                            'tpl' => WWW . '/menu/menu.php',
-                        ]); ?>--}}
+                       {!! $menu !!}
                     </div>
                 </div>
                 <div class="clearfix"> </div>
