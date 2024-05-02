@@ -16,6 +16,21 @@ class Product extends Model
 
     public function relatedProducts()
     {
-        return $this->hasMany(RelatedProduct::class, 'product_id', 'id');
+        return $this->hasMany(RelatedProduct::class, 'product_id', 'id')->get();
+    }
+
+    public function getRelatedProducts()
+    {
+        $relatedProducts = $this->relatedProducts();
+        $related = [];
+        foreach ($relatedProducts as $prod){
+            $related[] = $prod->related;
+        }
+        return $related;
+    }
+
+    public function modifications()
+    {
+        return $this->hasMany(Modification::class, 'product_id', 'id')->get();
     }
 }

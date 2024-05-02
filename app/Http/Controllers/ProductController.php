@@ -32,11 +32,7 @@ class ProductController extends Controller
     public function show(Product $product){
         $gallery = Gallery::where('product_id',$product->id)->get();
 
-        $relatedProducts = $product->relatedProducts()->get();
-        $related = [];
-        foreach ($relatedProducts as $prod){
-            $related[] = $prod->related;
-        }
+        $related = $product->getRelatedProducts();
 
         $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts($product->id);
         $this->recentlyViewedService->setRecentlyViewed($product->id);
@@ -44,6 +40,7 @@ class ProductController extends Controller
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
+
         return view('product.show', compact("product",
             "gallery","related", "recentlyViewed", "breadCrumbs","currencyWidget", "currency","menu"));
     }

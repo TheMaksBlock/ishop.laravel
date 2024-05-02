@@ -18,7 +18,6 @@
             <div class="single-main">
                 <div class="col-md-9 single-main-left">
                     <div class="sngl-top">
-                        <?php xdebug_break()?>
                         @if (!$gallery->isEmpty())
                             <div class="col-md-5 single-top-left">
                                 <div class="flexslider">
@@ -58,11 +57,6 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <?php
-                                /*$currency = App::$app->getProperty('currency');
-                                $cats = App::$app->getProperty('cats');*/
-                                ?>
-
 
                                 <h5 class="item_price" id="base-price"
                                     data-base="{{$product->old_price * $currency['value']}}">
@@ -75,7 +69,7 @@
                                     {{$currency['symbol_left'].$product->price * $currency['value'].$currency['symbol_right']}}
                                 </h5>
                                 <p>{{$product->Content}} </p>
-                                {{--<?php if($mods): ?>
+                                {{--@if($mods)
                                 <div class="available">
                                     <ul>
                                         <li>Color
@@ -92,21 +86,20 @@
                                         <div class="clearfix"></div>
                                     </ul>
                                 </div>
-                                <?php endif;?>
+                                @endif--}}
                                 <ul class="tag-men">
                                     <li><span>Category</span>
-                                        <span>: <a
-                                                href="/category/<?= $cats[$product->category_id]['alias'] ?>">
-                                            <?= $cats[$product->category_id]['title'] ?></a></span>
+                                        <span>:<a href="{{ route('category', ['alias' => $product->alias]) }}">
+                                            {{$product->title}}</a></span>
                                     </li>
-                                </ul>--}}
+                                </ul>
 
-                                {{--<div class="quantity">
+                                <div class="quantity">
                                     <input type="number" size="4" value="1" name="quantity" min="1" step="1"
                                            class="input-lg">
                                 </div>
                                 <a id="productAdd" data-id="<?= $product->id ?>" href="/cart/add?id=<?= $product->id ?>"
-                                   class="add-cart item_add add-to-cart-link">ADD TO CART</a>--}}
+                                   class="add-cart item_add add-to-cart-link">ADD TO CART</a>
                             </div>
                         </div>
                         <div class="clearfix"></div>
