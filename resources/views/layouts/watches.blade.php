@@ -201,13 +201,10 @@
 
 <div class="preload"><img src="{{ asset('images/ring.svg')}}" alt=""></div>
 <!--footer-end-->
-{{--<?php $curr = App::$app->getProperty('currency')?>
 <script>
-    var path = '<?=PATH?>',
-        course = <?=$curr['value']?>,
-        symbolLeft = '<?=$curr['symbol_left']?>',
-        symbolRight = '<?=$curr['symbol_right']?>';
-</script>--}}
+    var path ='{{ asset('/') }}';
+</script>
+
 <script src="{{ asset('js/jquery-1.11.0.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap.min.js')}}"></script>

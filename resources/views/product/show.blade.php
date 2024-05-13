@@ -89,7 +89,7 @@
                                 @endif--}}
                                 <ul class="tag-men">
                                     <li><span>Category</span>
-                                        <span>:<a href="{{ route('category', ['alias' => $product->alias]) }}">
+                                        <span>:<a href="{{ route('category.show', ['category' => $product->alias]) }}">
                                             {{$product->title}}</a></span>
                                     </li>
                                 </ul>
@@ -220,10 +220,10 @@
                                                        href="/cart/add?id={{ $rel->id }}">
                                                         <i></i>
                                                     </a>
-                                                    <span class="item_price">{{ $rel->price }}</span>
+                                                    <span class="item_price">{{ $rel->price*$currency['value'] }}</span>
                                                     @if ($rel->old_price)
                                                         <small>
-                                                            <del>{{ $rel->old_price }}</del>
+                                                            <del>{{ $rel->old_price*$currency['value'] }}</del>
                                                         </small>
                                                     @endif
                                                 </h4>
@@ -260,10 +260,10 @@
                                                        href="/cart/add?id={{ $product->id }}">
                                                         <i></i>
                                                     </a>
-                                                    <span class="item_price">{{ $product->price }}</span>
+                                                    <span class="item_price">{{$currency['symbol_left'].$product->price *$currency['value'].$currency['symbol_right'] }}</span>
                                                     @if ($product->old_price)
                                                         <small>
-                                                            <del>{{ $product->old_price }}</del>
+                                                            <del>{{ $currency['symbol_left'].$product->oldPrice *$currency['value'].$currency['symbol_right'] }}</del>
                                                         </small>
                                                     @endif
                                                 </h4>

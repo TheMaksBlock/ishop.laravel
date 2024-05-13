@@ -66,9 +66,9 @@
                                     <a data-id="{{ $hit->id }}" class="add-to-cart-link" href="/cart/add?id={{ $hit->id }}">
                                         <i></i>
                                     </a>
-                                    <span class="item_price">{{$currency['symbol_left'].$hit->price .$currency['symbol_right']}}</span>
+                                    <span class="item_price">{{$currency['symbol_left'].$hit->price *$currency['value'].$currency['symbol_right']}}</span>
                                     @if ($hit->old_price)
-                                        <small><del>{{ $currency['symbol_left'].$hit->old_price.$currency['symbol_right'] }}</del></small>
+                                        <small><del>{{ $currency['symbol_left'].$hit->old_price*$currency['value'].$currency['symbol_right'] }}</del></small>
                                     @endif
                                 </h4>
                             </div>
