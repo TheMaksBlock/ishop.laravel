@@ -50,12 +50,11 @@
                     <a href="cart/show" onclick="getCart(); return false">
                         <div class="total">
                             <img src="{{ asset('images/cart-1.png')}}" alt="">
-                            {{--<?php if(!empty($_SESSION['cart'])): ?>
-                            <span class="simpleCart_total "><?=$_SESSION['cart.currency']['symbol_left'].$_SESSION['cart.sum']
-                                .$_SESSION['cart.currency']['symbol_right'] ?></span>
-                            <?php else: ?>
+                            @if($cartSum)
+                                <span class="simpleCart_total ">{{$currency['symbol_left'].$cartSum .$currency['symbol_right']}}</span>
+                            @else
                             <span class="simpleCart_total ">Empty Cart</span>
-                            <?php endif; ?>--}}
+                            @endif
                         </div>
                     </a>
 
@@ -193,7 +192,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
-                <a href="cart/view" type="button" class="btn btn-primary">Оформить заказ</a>
+                <a href="{{route('cart.index')}}" type="button" class="btn btn-primary">Оформить заказ</a>
                 <button type="button" class="btn btn-danger" onclick="clearCart()">Очистить корзину</button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-@if(!empty($cart))
+@if(!empty($cart) && count($cart)>3)
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>

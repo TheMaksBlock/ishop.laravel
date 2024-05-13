@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Services\BreadCrumbsService;
+use App\Services\CartService;
 use App\Services\CategoriesMenuService;
 use App\Services\CurrencyService;
 use App\Services\RecentlyViewedService;
@@ -14,10 +15,14 @@ class MainController extends Controller
 {
     private $currencyService;
     private $categoriesMenuService;
+    private $cartService;
 
-    public function __construct(CurrencyService $currencyService, CategoriesMenuService $categoryMenu) {
+    public function __construct(CurrencyService $currencyService,
+                                CategoriesMenuService $categoryMenu,
+                                CartService $cartService) {
         $this->currencyService = $currencyService;
         $this->categoriesMenuService = $categoryMenu;
+        $this->cartService = $cartService;
     }
 
     public function index(){
@@ -30,6 +35,7 @@ class MainController extends Controller
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        return view('main.index', compact("brands", "hits", "currencyWidget", "currency", "menu"));
+        $cartSum = $this->cartService->getCartSum();
+        return view('main.index', compact("brands", "hits", "currencyWidget", "currency", "menu", "cartSum"));
     }
 }

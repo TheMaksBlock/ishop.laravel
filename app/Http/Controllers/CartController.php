@@ -3,51 +3,77 @@
 namespace App\Http\Controllers;
 
 use App\Services\CartService;
+use App\Services\CategoriesMenuService;
+use App\Services\CurrencyService;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
-{
+class CartController extends Controller {
     private $cartService;
-    public function __construct(CartService $cartService){
+    private $currencyService;
+    private $categoriesMenuService;
+
+    public function __construct(CartService           $cartService,
+                                CurrencyService       $currencyService,
+                                CategoriesMenuService $categoryMenu) {
         $this->cartService = $cartService;
+        $this->currencyService = $currencyService;
+        $this->categoriesMenuService = $categoryMenu;
     }
-    public function add(Request $request){
+
+    public function add(Request $request) {
         $id = $request->get('id');
-        $this->cartService->add($id,1);
+        $this->cartService->add($id, 1);
         $cart = $this->cartService->getCart();
 
-        if($request->ajax()){
-            return view('cart.index_modal',compact('cart'));
+        if ($request->ajax()) {
+            return view('cart.index_modal', compact('cart'));
         }
         redirect();
     }
 
-    public function showAction(){
+    public function showAction() {
         $this->loadView('cart_model');
         redirect();
     }
 
-    public function deleteAction()
-    {
-        $id = !empty($_GET['id']) ? $_GET['id'] :null;
+    public function delete(Request $request) {
+        $id = $request->get('id');
 
-        if(isset($_SESSION['cart'][$id])){
-            $cart = new Cart();
-            $cart->deleteItem($id);
+        if ($id) {
+            $this->cartService->delete($id);
         }
 
-        if($this->isAjax()){
-            $this->loadView('cart_model');
+        $cart = $this->cartService->getCart();
+
+        if ($request->ajax()) {
+            return view('cart.index_modal', compact('cart'));
         }
+
         redirect();
     }
 
-    /*public function clearAction()
-    {
-        Cart::clear();
+    public function clear() {
+        $this->cartService->clear();
 
-        $this->loadView('cart_model');
-    }*/
+        $cart = $this->cartService->getCart();
+        return view('cart.index_modal', compact('cart'));
+    }
+
+    public function show(Request $request) {
+        if ($request->ajax()) {
+            $cart = $this->cartService->getCart();
+            return view('cart.index_modal', compact('cart'));
+        } else $this->index($request);
+    }
+
+    public function index(Request $request) {
+        $currencyWidget = $this->currencyService->getHtml();
+        $menu = $this->categoriesMenuService->get();
+        $cart = $this->cartService->getCart();
+        $cartSum = $this->cartService->getCartSum();
+        $currency = $this->currencyService->currency;
+        return view('cart.index', compact('cart', "menu", 'currencyWidget', "cartSum", "currency"));
+    }
 
     /*public function viewAction()
     {

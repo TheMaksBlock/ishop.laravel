@@ -18,7 +18,7 @@ class CartService {
             $title = "{$product->title}";
             $price = $product->price;
 
-            $cart = Cache::get('cart');
+            $cart = $this->getCart();
 
             $currency = app(CurrencyService::class)->currency;
             $cart['currency'] = $currency;
@@ -45,15 +45,31 @@ class CartService {
 
     }
 
+    public function delete($id){
+        $cart = $this->getCart();
+
+        if(isset($cart[$id])){
+            $qty = $cart[$id]['qty'];
+            $sum = $cart[$id]['price']*$qty;
+
+            $cart['qty'] -= $qty;
+            $cart['sum'] -= $sum;
+
+            unset($cart[$id]);
+            Cache::put('cart', $cart,60*24);
+        }
+    }
+
     public function getCart(){
         return Cache::get('cart');
     }
 
-    public function getCartQty(){
-        return Cache::get('cart.qty', 0);
+    public function clear(){
+        return Cache::forget('cart');
     }
 
     public function getCartSum(){
-        return Cache::get('cart.sum', 0);
+        $cart = $this->getCart();
+        return $cart['sum'] ?? null;
     }
 }
