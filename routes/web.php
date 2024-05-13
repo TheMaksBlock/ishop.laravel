@@ -14,5 +14,4 @@ Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name('
 Route::get('/cart/show', 'App\Http\Controllers\CartController@show')->name('cart.show');
 Route::get('/cart', 'App\Http\Controllers\CartController@index')->name('cart.index');
 
-Route::get('/category/{alias}', 'App\Http\Controllers\CartController@add')->name('category');
-Route::get('/category/{alias}', 'App\Http\Controllers\CartController@add')->name('category');
+Route::get('/category/{category:alias}', 'App\Http\Controllers\CategoryController@show')->name('category.show');

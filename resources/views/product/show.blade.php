@@ -220,10 +220,10 @@
                                                        href="/cart/add?id={{ $rel->id }}">
                                                         <i></i>
                                                     </a>
-                                                    <span class="item_price">{{ $rel->price*$currency['value'] }}</span>
+                                                    <span class="item_price">{{ $currency['symbol_left'].$rel->price*$currency['value'].$currency['symbol_right'] }}</span>
                                                     @if ($rel->old_price)
                                                         <small>
-                                                            <del>{{ $rel->old_price*$currency['value'] }}</del>
+                                                            <del>{{ $currency['symbol_left'].$rel->old_price*$currency['value'].$currency['symbol_right'] }}</del>
                                                         </small>
                                                     @endif
                                                 </h4>
@@ -263,7 +263,7 @@
                                                     <span class="item_price">{{$currency['symbol_left'].$product->price *$currency['value'].$currency['symbol_right'] }}</span>
                                                     @if ($product->old_price)
                                                         <small>
-                                                            <del>{{ $currency['symbol_left'].$product->oldPrice *$currency['value'].$currency['symbol_right'] }}</del>
+                                                            <del>{{ $currency['symbol_left'].$product->old_price *$currency['value'].$currency['symbol_right'] }}</del>
                                                         </small>
                                                     @endif
                                                 </h4>
