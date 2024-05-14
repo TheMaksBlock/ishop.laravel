@@ -10,13 +10,7 @@ class BreadCrumbsService {
 
     public function getBreadCrumbs($categoryId, $name = '') {
 
-        if(Cache::has("cats")) {
-            $cats = Cache::get("cats");
-        }
-        else {
-            $cats = DB::table("Category")->get()->keyBy('id')->toArray();
-            Cache::put("cats", $cats, now()->addHours(24));
-        }
+        $cats = CategoryService::getCats();
 
         $breadCrumbsArray = self::getParts($cats, $categoryId);
         $breadCrumbs = "<li><a href='" . route("main.index") . "'>Главная</a> </li>";

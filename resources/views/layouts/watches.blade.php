@@ -1,6 +1,6 @@
 @php use App\Services\CurrencyService; @endphp
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <base href="/">
     <link rel="shortcut icon" href="{{ asset('images/star.png')}}" type="image/png">

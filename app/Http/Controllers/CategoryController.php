@@ -23,6 +23,8 @@ class CategoryController extends Controller {
     private $breadCrumbsService;
     private $categoryService;
 
+    private $perPage = 3;
+
     public function __construct(BreadCrumbsService $breadCrumbsService,
                                 CurrencyService       $currencyService,
                                 CategoriesMenuService $categoryMenu,
@@ -36,14 +38,15 @@ class CategoryController extends Controller {
     }
 
     public function show(Category $category) {
-        $products = $this->categoryService->getProducts($category->id);
+        $products = $this->categoryService->getProducts($category->id,$this->perPage);
 
+        $categoryTitle = $category->title;
         $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($category->id);
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
         $cartSum = $this->cartService->getCartSum();
         return view('category.show', compact( "products","breadCrumbs","currencyWidget", "currency",
-            "menu", "cartSum"));
+            "menu", "cartSum", "categoryTitle"));
     }
 }

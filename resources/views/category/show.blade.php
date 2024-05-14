@@ -1,6 +1,6 @@
 @php use function PHPUnit\Framework\isEmpty;use function PHPUnit\Framework\isNull; @endphp
 @extends('layouts.watches')
-@section('title', "")
+@section('title', $categoryTitle)
 @section('content')
     <div class="breadcrumbs">
         <div class="container">
@@ -53,9 +53,7 @@
                             @endforeach
 
                             <div class="text-center">
-                                <?php /*if ($pagination->countPages > 1): */ ?><!--
-                                    <?php /*= $pagination; */ ?>
-                                    --><?php /*endif; */ ?>
+                                {{$products->links()}}
                             </div>
                         </div>
                     @else
