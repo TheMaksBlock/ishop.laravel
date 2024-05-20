@@ -109,8 +109,7 @@ $('#currency').change(function(){
 });
 
 
-/*
-/!*filters*!/
+
 $('body').on('change', '.w_sidebar input', function(){
     var checked = $('.w_sidebar input:checked'),
         data = '';
@@ -119,34 +118,40 @@ $('body').on('change', '.w_sidebar input', function(){
         data += this.value + ',';
     });
 
-    if(data){
-        $.ajax({
-            url: location.href,
-            data: {filter: data},
-            type: 'GET',
-            beforeSend: function(){
-                $('.preload').fadeIn(300,function(){
-                    $('.product-one').hide();
-                });
-            },
-            success: function(res){
-                $('.preload').fadeOut('slow',function(){
-                    $('.product-one').html(res).fadeIn(300);
-                    var url = location.search.replace(/filter(.+?)(&|$)/g, ''); //$2
+    // Определяем URL для AJAX запроса
+    var url = data ? location.href : location.href.split('?')[0];
+
+    $.ajax({
+        url: url,
+        data: data ? {filter: data} : {}, // Если data не пустая, добавляем параметр filter
+        type: 'GET',
+        beforeSend: function(){
+            $('.preload').fadeIn(300,function(){
+                $('.product-one').hide();
+            });
+        },
+        success: function(res){
+            $('.preload').fadeOut('slow',function(){
+                $('.product-one').html(res).fadeIn(300);
+                if (!data) {
+                    console.log('yes');
+                    history.pushState({}, '', location.pathname);
+                } else {
+                    var url = location.search.replace(/filter(.+?)(&|$)/g, ''); //$
                     var newURL = location.pathname + url + (location.search ? "&" : "?") + "filter=" + data;
+                    newURL = newURL.replace(/page(.+?)(&|$)/g, '');
+                    nuewURL = newURL.replace('&&', '&');
                     newURL = newURL.replace('&&', '&');
                     newURL = newURL.replace('?&', '?');
                     newURL = newURL.slice(0, -1);
                     history.pushState({}, '', newURL);
-                });
-            },
-            error: function(){
-                alert("Error");
-            }
+                }
+            });
+        },
+        error: function(){
+            alert("Error");
+            $('.preload').fadeOut('slow');
+        }
 
-        })
-    } else{
-        window.location = location.pathname;
-    }
+    });
 });
-/!*filters*!/*/

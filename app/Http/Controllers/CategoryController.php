@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Gallery;
 use App\Models\Product;
-use App\Models\RelatedProduct;
 use App\Services\BreadCrumbsService;
 use App\Services\CartService;
 use App\Services\CategoriesMenuService;
 use App\Services\CategoryService;
 use App\Services\CurrencyService;
-use App\Services\RecentlyViewedService;
-use function PHPUnit\Framework\isEmpty;
+use App\Services\FilterService;
+use Illuminate\Http\Request;
+
 
 
 class CategoryController extends Controller {
@@ -23,22 +21,32 @@ class CategoryController extends Controller {
     private $breadCrumbsService;
     private $categoryService;
 
-    private $perPage = 3;
+    private $perPage = 9;
 
-    public function __construct(BreadCrumbsService $breadCrumbsService,
+    private $filterService;
+
+    public function __construct(BreadCrumbsService    $breadCrumbsService,
                                 CurrencyService       $currencyService,
                                 CategoriesMenuService $categoryMenu,
                                 CartService           $cartService,
-                                CategoryService $categoryService) {
+                                CategoryService       $categoryService,
+                                FilterService         $filterService) {
         $this->currencyService = $currencyService;
         $this->categoriesMenuService = $categoryMenu;
         $this->cartService = $cartService;
         $this->breadCrumbsService = $breadCrumbsService;
         $this->categoryService = $categoryService;
+        $this->filterService = $filterService;
     }
 
-    public function show(Category $category) {
-        $products = $this->categoryService->getProducts($category->id,$this->perPage);
+    public function show(Category $category, Request $request) {
+        if($request->ajax()){
+            $request->merge(['page' => 1]);
+        }
+        $filterMenu = $this->filterService->getFilterHTML($request->get('filter'));
+
+        $query = $this->filterService->filterProducts( $request->get('filter'));
+        $products = $this->categoryService->getProducts($category->id, $this->perPage,$query);
 
         $categoryTitle = $category->title;
         $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($category->id);
@@ -46,7 +54,15 @@ class CategoryController extends Controller {
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
         $cartSum = $this->cartService->getCartSum();
-        return view('category.show', compact( "products","breadCrumbs","currencyWidget", "currency",
-            "menu", "cartSum", "categoryTitle"));
+        $partial = $request->ajax();
+
+        if($partial){
+            return view('products.indexPartial', compact("products","currency", "partial"));
+        }
+
+        return view('category.show', compact("products", "breadCrumbs", "currencyWidget", "currency",
+            "menu", "cartSum", "categoryTitle", "filterMenu", "partial"));
+
+
     }
 }
