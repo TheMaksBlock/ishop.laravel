@@ -14,7 +14,7 @@ Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name('
 Route::get('/cart/show', 'App\Http\Controllers\CartController@show')->name('cart.show');
 Route::get('/cart', 'App\Http\Controllers\CartController@index')->name('cart.index');
 
-Route::get('/catalog', 'App\Http\Controllers\CatalogController@show')->name('search.index');
+Route::get('/catalog', 'App\Http\Controllers\CatalogController@show')->name('catalog.index');
 Route::get('/catalog/typeahead', 'App\Http\Controllers\CatalogController@typeahead');
-Route::get('/catalog/{category:alias}', 'App\Http\Controllers\CatalogController@show')->name('category.show');
+Route::get('/catalog/{category:alias}', 'App\Http\Controllers\CatalogController@show')->name('catalog.show');
 

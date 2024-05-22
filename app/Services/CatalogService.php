@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-class CategoryService {
+class CatalogService {
     public function getIds($id): ?string {
         $cats = self::getCats();
 

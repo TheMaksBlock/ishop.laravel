@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Services\BreadCrumbsService;
 use App\Services\CartService;
 use App\Services\CategoriesMenuService;
-use App\Services\CategoryService;
+use App\Services\CatalogService;
 use App\Services\CurrencyService;
 use App\Services\FilterService;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class CatalogController extends Controller {
                                 CurrencyService       $currencyService,
                                 CategoriesMenuService $categoryMenu,
                                 CartService           $cartService,
-                                CategoryService       $categoryService,
+                                CatalogService        $categoryService,
                                 FilterService         $filterService) {
         $this->currencyService = $currencyService;
         $this->categoriesMenuService = $categoryMenu;
@@ -76,7 +76,7 @@ class CatalogController extends Controller {
         $filterMenu = $this->filterService->getFilterHTML($request->get('filter'));
 
         $filterQuery = $request->get('filter');
-        $searchQuery = $request->get('search');
+        $searchQuery = $request->get('s');
 
         $query = $this->filterService->attributesFilter($filterQuery);
         $query = $this->filterService->searchFilter( $searchQuery,$query);

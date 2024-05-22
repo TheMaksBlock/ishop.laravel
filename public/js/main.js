@@ -24,10 +24,8 @@ $("#typeahead").typeahead({
 $('#typeahead').bind('typeahead:select', function(ev, suggestion) {
     let currentUrl = location.href.split('?')[0];
     if (currentUrl.includes('catalog')) {
-        console.log(1);
         window.location = currentUrl+'?s=' + encodeURIComponent(suggestion.title)+ (currentFilter ? '&filter=' + currentFilter : '');
     } else {
-        console.log(2);
         window.location = path +'catalog?s='+encodeURIComponent(suggestion.title)+ (currentFilter ? '&filter=' + currentFilter : '');
     }
 
@@ -42,6 +40,17 @@ function getParameterByName(name) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+$('body').on('click','#searchButton', function(e) {
+    let searchValue = $('#typeahead').val();
+
+    let currentUrl = location.href.split('?')[0];
+    if (currentUrl.includes('catalog')) {
+        window.location = currentUrl+'?s=' + searchValue+ (currentFilter ? '&filter=' + currentFilter : '');
+    } else {
+        window.location = path +'catalog?s='+searchValue+ (currentFilter ? '&filter=' + currentFilter : '');
+    }
+});
 
 /*Cart*/
 $('body').on('click','.add-to-cart-link', function(e) {
@@ -137,14 +146,31 @@ $('body').on('change', '.w_sidebar input', function() {
         data += this.value + ',';
     });
 
+    console.log(data);
+
     data = data.slice(0, -1); // Удаляем последнюю запятую
 
     // Определяем URL для AJAX запроса
     var url = location.href.split('?')[0];
 
+    const dataToSend = {};
+
+    let searchFilter = getParameterByName('s')
+    if (searchFilter) {
+        dataToSend.s = searchFilter;
+    }
+
+    console.log(currentFilter);
+
+    if(data){
+        dataToSend.filter = data;
+    }
+
+
+    console.log(location.href+"");
     $.ajax({
-        url: location.href,
-        data: data ? { filter: data } : {}, // Если data не пустая, добавляем параметр filter
+        url: url,
+        data: dataToSend,
         type: 'GET',
         beforeSend: function() {
             $('.preload').fadeIn(300, function() {

@@ -87,13 +87,6 @@
                                     </ul>
                                 </div>
                                 @endif--}}
-                                <ul class="tag-men">
-                                    <li><span>Category</span>
-                                        <span>:<a href="{{ route('category.show', ['category' => $product->alias]) }}">
-                                            {{$product->title}}</a></span>
-                                    </li>
-                                </ul>
-
                                 <div class="quantity">
                                     <input type="number" size="4" value="1" name="quantity" min="1" step="1"
                                            class="input-lg">

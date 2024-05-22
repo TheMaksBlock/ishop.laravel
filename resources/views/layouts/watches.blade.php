@@ -84,10 +84,14 @@
             </div>
             <div class="col-md-3 header-right">
                 <div class="search-bar">
-                    <form action="catalog" autocomplete="off">
-                        <input type = "text" class="typeahead" id = "typeahead" name ="s" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-                        <input type = "submit" value="">
-                    </form>
+                    <div class="input-group">
+                        <input type="text" class="form-control typeahead" id="typeahead" name="s" value="">
+                        <span class="input-group-btn">
+                            <button id="searchButton" class="btn btn-default" type="button">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="clearfix"> </div>

@@ -4,13 +4,12 @@ namespace App\Services;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class BreadCrumbsService {
 
     public function getBreadCrumbs($categoryId, $name = '') {
 
-        $cats = CategoryService::getCats();
+        $cats = CatalogService::getCats();
 
         $breadCrumbsArray = self::getParts($cats, $categoryId);
         $breadCrumbs = "<li><a href='" . route("main.index") . "'>Главная</a> </li>";
