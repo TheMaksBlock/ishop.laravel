@@ -27,7 +27,12 @@ class CategoryService {
         if(!$query){
             return Product::whereIn('category_id', explode(',', $childIds))->paginate($perPage);
         }
-        return $query->whereIn('category_id', explode(',', $childIds))->paginate($perPage);
+
+        if($id){
+            $query = $query->whereIn('category_id', explode(',', $childIds));
+        }
+
+        return $query->paginate($perPage);
     }
 
     public static function getCats() {

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 
 
-class CategoryController extends Controller {
+class CatalogController extends Controller {
     private $currencyService;
     private $categoriesMenuService;
     private $cartService;
@@ -24,6 +24,7 @@ class CategoryController extends Controller {
     private $perPage = 9;
 
     private $filterService;
+    private $searchLimit = 10;
 
     public function __construct(BreadCrumbsService    $breadCrumbsService,
                                 CurrencyService       $currencyService,
@@ -39,17 +40,48 @@ class CategoryController extends Controller {
         $this->filterService = $filterService;
     }
 
+
+    public function typeahead(Request $request) {
+
+        if ($request->ajax()) {
+            $query = trim($request->get('query'));
+
+            if (!empty($query)) {
+                $products = Product::select('id', 'title')
+                    ->where('title', 'LIKE', "%$query%")
+                    ->limit($this->searchLimit)->get();
+
+                return response()->json($products);
+            }
+        }
+
+        return response()->json([]);
+    }
+
     public function show(Category $category, Request $request) {
+
         if($request->ajax()){
             $request->merge(['page' => 1]);
         }
+
+        if($category->exists){
+            $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($category->id);
+            $id = $category->id;
+        }
+        else{
+            $breadCrumbs = null;
+            $id = null;
+        }
+
         $filterMenu = $this->filterService->getFilterHTML($request->get('filter'));
 
-        $query = $this->filterService->filterProducts( $request->get('filter'));
-        $products = $this->categoryService->getProducts($category->id, $this->perPage,$query);
+        $filterQuery = $request->get('filter');
+        $searchQuery = $request->get('search');
 
-        $categoryTitle = $category->title;
-        $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($category->id);
+        $query = $this->filterService->attributesFilter($filterQuery);
+        $query = $this->filterService->searchFilter( $searchQuery,$query);
+        $products = $this->categoryService->getProducts($id, $this->perPage,$query);
+
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
@@ -57,12 +89,10 @@ class CategoryController extends Controller {
         $partial = $request->ajax();
 
         if($partial){
-            return view('products.indexPartial', compact("products","currency", "partial"));
+            return view('catalog.partial', compact("products","currency", "partial"));
         }
 
-        return view('category.show', compact("products", "breadCrumbs", "currencyWidget", "currency",
-            "menu", "cartSum", "categoryTitle", "filterMenu", "partial"));
-
-
+        return view('catalog.show', compact("products", "breadCrumbs", "currencyWidget", "currency",
+            "menu", "cartSum", "filterMenu", "partial", "searchQuery"));
     }
 }

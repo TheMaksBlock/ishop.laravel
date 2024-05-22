@@ -84,7 +84,7 @@
             </div>
             <div class="col-md-3 header-right">
                 <div class="search-bar">
-                    <form action="search" autocomplete="off">
+                    <form action="catalog" autocomplete="off">
                         <input type = "text" class="typeahead" id = "typeahead" name ="s" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
                         <input type = "submit" value="">
                     </form>

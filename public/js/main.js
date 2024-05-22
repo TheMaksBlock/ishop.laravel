@@ -1,10 +1,12 @@
 /* Search */
+var currentFilter = getParameterByName('filter');
+
 var products = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
         wildcard: '%QUERY',
-        url: path + '/search/typeahead?query=%QUERY'
+        url: path + 'catalog/typeahead?query=%QUERY' + (currentFilter ? '&filter=' + currentFilter : '')
     }
 });
 
@@ -12,7 +14,7 @@ products.initialize();
 
 $("#typeahead").typeahead({
     highlight: true
-},{
+}, {
     name: 'products',
     display: 'title',
     limit: 9,
@@ -20,9 +22,26 @@ $("#typeahead").typeahead({
 });
 
 $('#typeahead').bind('typeahead:select', function(ev, suggestion) {
-    // console.log(suggestion);
-    window.location = path + '/search/?s=' + encodeURIComponent(suggestion.title);
+    let currentUrl = location.href.split('?')[0];
+    if (currentUrl.includes('catalog')) {
+        console.log(1);
+        window.location = currentUrl+'?s=' + encodeURIComponent(suggestion.title)+ (currentFilter ? '&filter=' + currentFilter : '');
+    } else {
+        console.log(2);
+        window.location = path +'catalog?s='+encodeURIComponent(suggestion.title)+ (currentFilter ? '&filter=' + currentFilter : '');
+    }
+
 });
+
+function getParameterByName(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 /*Cart*/
 $('body').on('click','.add-to-cart-link', function(e) {
@@ -110,48 +129,53 @@ $('#currency').change(function(){
 
 
 
-$('body').on('change', '.w_sidebar input', function(){
-    var checked = $('.w_sidebar input:checked'),
-        data = '';
+$('body').on('change', '.w_sidebar input', function() {
+    var checked = $('.w_sidebar input:checked');
+    var data = '';
 
-    checked.each(function () {
+    checked.each(function() {
         data += this.value + ',';
     });
 
+    data = data.slice(0, -1); // Удаляем последнюю запятую
+
     // Определяем URL для AJAX запроса
-    var url = data ? location.href : location.href.split('?')[0];
+    var url = location.href.split('?')[0];
 
     $.ajax({
-        url: url,
-        data: data ? {filter: data} : {}, // Если data не пустая, добавляем параметр filter
+        url: location.href,
+        data: data ? { filter: data } : {}, // Если data не пустая, добавляем параметр filter
         type: 'GET',
-        beforeSend: function(){
-            $('.preload').fadeIn(300,function(){
+        beforeSend: function() {
+            $('.preload').fadeIn(300, function() {
                 $('.product-one').hide();
             });
         },
-        success: function(res){
-            $('.preload').fadeOut('slow',function(){
+        success: function(res) {
+            $('.preload').fadeOut('slow', function() {
                 $('.product-one').html(res).fadeIn(300);
+
+                var newURL = location.pathname;
+                var searchParams = new URLSearchParams(location.search);
+
                 if (!data) {
-                    console.log('yes');
-                    history.pushState({}, '', location.pathname);
+                    searchParams.delete('filter');
                 } else {
-                    var url = location.search.replace(/filter(.+?)(&|$)/g, ''); //$
-                    var newURL = location.pathname + url + (location.search ? "&" : "?") + "filter=" + data;
-                    newURL = newURL.replace(/page(.+?)(&|$)/g, '');
-                    nuewURL = newURL.replace('&&', '&');
-                    newURL = newURL.replace('&&', '&');
-                    newURL = newURL.replace('?&', '?');
-                    newURL = newURL.slice(0, -1);
-                    history.pushState({}, '', newURL);
+                    searchParams.set('filter', data);
                 }
+
+                searchParams.delete('page'); // Удаляем параметр страницы при изменении фильтра
+
+                newURL += '?' + searchParams.toString();
+
+                history.pushState({}, '', newURL);
+
+                currentFilter = getParameterByName('filter');
             });
         },
-        error: function(){
+        error: function() {
             alert("Error");
             $('.preload').fadeOut('slow');
         }
-
     });
 });

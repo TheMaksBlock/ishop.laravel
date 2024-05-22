@@ -2,7 +2,7 @@
     $parent = isset($category->childs);
 @endphp
 <li>
-    <a href="{{ url('category/' . $category->alias) }}">{{ $category->title }}</a>
+    <a href="{{ url('catalog/' . $category->alias) }}">{{ $category->title }}</a>
     @if($parent)
         <ul>
             @foreach($category->childs as $child)

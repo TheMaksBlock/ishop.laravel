@@ -57,12 +57,14 @@ class FilterService {
         return $attrs;
     }
 
-    public function filterProducts($filterIds){
+    public function attributesFilter($filterIds,$query=null){
         if(empty($filterIds)){
             return null;
         }
 
-        $query = Product::query();
+        if($query == null){
+            $query = Product::query();
+        }
 
         $filter = $this->getFilter($filterIds);
         $cnt = $this->getCountGroups($filter);
@@ -79,7 +81,14 @@ class FilterService {
         });
     }
 
-    public function getFilter($filterIds){
+    public function searchFilter($filter, $query=null){
+        if($query == null){
+            $query = Product::query();
+        }
+
+        return $query->where('title','LIKE', "%{$filter}%");
+    }
+    public function getFilter($filterIds): ?string {
         $filter = null;
         if(!empty($filterIds)){
             $filter = preg_replace("#[^\d,]+#", '', $filterIds);
