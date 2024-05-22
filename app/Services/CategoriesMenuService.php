@@ -76,10 +76,13 @@ class CategoriesMenuService {
     }
 
     protected function getMenuHtml($tree, $tab = '') {
-        $str = '';
+        $str = "<li>
+            <a href=\"" . route('catalog.index') . "\">Все товары</a>
+        </li>";
         foreach ($tree as $id => $category) {
             $str .= $this->catToTemplate($category, $tab, $id);
         }
+
         return $str;
     }
 
