@@ -18,3 +18,10 @@ Route::get('/catalog', 'App\Http\Controllers\CatalogController@show')->name('cat
 Route::get('/catalog/typeahead', 'App\Http\Controllers\CatalogController@typeahead');
 Route::get('/catalog/{category:alias}', 'App\Http\Controllers\CatalogController@show')->name('catalog.show');
 
+Route::get('/register', 'App\Http\Controllers\RegisterController@index')->name('register.index')->middleware("guest");
+Route::post('/register', 'App\Http\Controllers\RegisterController@create')->name('register.create')->middleware("guest");
+
+Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login.index')->middleware("guest");
+Route::post('/login', 'App\Http\Controllers\LoginController@login')->name('login.login')->middleware("guest");
+Route::get('/login/logout', 'App\Http\Controllers\LoginController@logout')->name('login.logout')->middleware('auth');
+

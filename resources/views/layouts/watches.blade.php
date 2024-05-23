@@ -1,19 +1,19 @@
 @php use App\Services\CurrencyService; @endphp
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <base href="/">
     <link rel="shortcut icon" href="{{ asset('images/star.png')}}" type="image/png">
     <title>@yield('title')</title>
-    <link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{{ asset('megamenu/css/ionicons.min.css" rel="stylesheet')}}" type="text/css" media="all" />
-    <link href="{{ asset('megamenu/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
-    <link rel="stylesheet" href="{{ asset('css/flexslider.css')}}" type="text/css" media="screen" />
+    <link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ asset('megamenu/css/ionicons.min.css" rel="stylesheet')}}" type="text/css" media="all"/>
+    <link href="{{ asset('megamenu/css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('css/flexslider.css')}}" type="text/css" media="screen"/>
     <!--theme-style-->
-    <link href="{{ asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
 <!--top-header-->
@@ -28,18 +28,18 @@
                         </select>
                     </div>
                     <div class="btn-group">
-                        <a class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown">Аккаунт <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            {{--<?php if(!empty($_SESSION['user'])): ?>
-                            <li><a href="#">Добро пожаловать, <?=h($_SESSION['user']['name']);?></a></li>
-                            <li><a href="user/logout">Выход</a></li>
-                            <?php else: ?>
-                            <li><a href="user/login">Вход</a></li>
-                            <li><a href="user/signup">Регистрация</a></li>
-                            <?php endif; ?>--}}
+                            @auth
+                                <li><a href="#">Добро пожаловать, {{ auth()->user()->login}}</a></li>
+                                <li><a href="{{route("login.logout")}}">Выход</a></li>
+                            @endauth
+                            @guest
+                                <li><a href="{{route("login.index")}}">Вход</a></li>
+                                <li><a href="{{route("register.index")}}">Регистрация</a></li>
+                            @endguest
                         </ul>
                     </div>
-
 
 
                     <div class="clearfix"></div>
@@ -51,9 +51,10 @@
                         <div class="total">
                             <img src="{{ asset('images/cart-1.png')}}" alt="">
                             @if($cartSum)
-                                <span class="simpleCart_total ">{{$currency['symbol_left'].$cartSum .$currency['symbol_right']}}</span>
+                                <span
+                                    class="simpleCart_total ">{{$currency['symbol_left'].$cartSum .$currency['symbol_right']}}</span>
                             @else
-                            <span class="simpleCart_total ">Empty Cart</span>
+                                <span class="simpleCart_total ">Empty Cart</span>
                             @endif
                         </div>
                     </a>
@@ -77,10 +78,10 @@
             <div class="col-md-9 header-left">
                 <div class="menu-container">
                     <div class="menu">
-                       {!! $menu !!}
+                        {!! $menu !!}
                     </div>
                 </div>
-                <div class="clearfix"> </div>
+                <div class="clearfix"></div>
             </div>
             <div class="col-md-3 header-right">
                 <div class="search-bar">
@@ -94,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="clearfix"> </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
@@ -171,12 +172,14 @@
         <div class="footer-top">
             <div class="col-md-6 footer-left">
                 <form>
-                    <input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+                    <input type="text" value="Enter Your Email" onfocus="this.value = '';"
+                           onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
                     <input type="submit" value="Subscribe">
                 </form>
             </div>
             <div class="col-md-6 footer-right">
-                <p>© 2015 Luxury Watches. All Rights Reserved | Design by  <a href="/http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+                <p>© 2015 Luxury Watches. All Rights Reserved | Design by <a href="/http://w3layouts.com/"
+                                                                             target="_blank">W3layouts</a></p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -188,7 +191,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel">Корзина</h4>
             </div>
             <div class="modal-body">
@@ -206,7 +210,7 @@
 <div class="preload"><img src="{{ asset('images/ring.svg')}}" alt=""></div>
 <!--footer-end-->
 <script>
-    var path ='{{ asset('/') }}';
+    var path = '{{ asset('/') }}';
 </script>
 
 <script src="{{ asset('js/jquery-1.11.0.min.js')}}"></script>
@@ -226,7 +230,7 @@
 <script src="{{ asset('js/main.js')}}"></script>
 <script>
     // Can also be used with $(document).ready()
-    $(window).load(function() {
+    $(window).load(function () {
         $('.flexslider').flexslider({
             animation: "slide",
             controlNav: "thumbnails"
@@ -255,22 +259,22 @@
 </script>
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
 
         var menu_ul = $('.menu_drop > li > ul'),
-            menu_a  = $('.menu_drop > li > a');
+            menu_a = $('.menu_drop > li > a');
 
         menu_ul.hide();
 
-        menu_a.click(function(e) {
+        menu_a.click(function (e) {
             e.preventDefault();
-            if(!$(this).hasClass('active')) {
+            if (!$(this).hasClass('active')) {
                 menu_a.removeClass('active');
                 menu_ul.filter(':visible').slideUp('normal');
-                $(this).addClass('active').next().stop(true,true).slideDown('normal');
+                $(this).addClass('active').next().stop(true, true).slideDown('normal');
             } else {
                 $(this).removeClass('active');
-                $(this).next().stop(true,true).slideUp('normal');
+                $(this).next().stop(true, true).slideUp('normal');
             }
         });
 
