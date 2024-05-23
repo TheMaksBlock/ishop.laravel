@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-6 top-header-left">
                 <div class="cart box_1">
-                    <a href="cart/show" onclick="getCart(); return false">
+                    <a href="{{rout('cart.index')}}" onclick="getCart(); return false">
                         <div class="total">
                             <img src="{{ asset('images/cart-1.png')}}" alt="">
                             @if($cartSum)
