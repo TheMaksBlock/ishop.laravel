@@ -15,6 +15,7 @@ Route::get('/cart/clear', 'App\Http\Controllers\CartController@clear')->name('ca
 Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name('cart.delete');
 Route::get('/cart/show', 'App\Http\Controllers\CartController@show')->name('cart.show');
 Route::get('/cart', 'App\Http\Controllers\CartController@index')->name('cart.index')->middleware(authMW::class);
+Route::Post('/cart/checkout', 'App\Http\Controllers\CartController@checkout')->name('cart.checkout')->middleware(authMW::class);
 
 Route::get('/catalog', 'App\Http\Controllers\CatalogController@show')->name('catalog.index');
 Route::get('/catalog/typeahead', 'App\Http\Controllers\CatalogController@typeahead');

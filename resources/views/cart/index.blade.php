@@ -23,6 +23,11 @@
                         <h2>Оформление заказа</h2>
                     </div>
                     <br><br>
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     @if(!empty($cart) && count($cart)>3)
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
@@ -59,44 +64,16 @@
                             </tbody>
                         </table>
                     </div>
-                   {{-- <div class="col-md-6 account-left">
-                        <form method="post" action="cart/checkout" role="form" data-toggle="validator">
-                                <?php if(!isset($_SESSION['user'])): ?>
-                            <div class="form-group has-feedback">
-                                <label for="login">Login</label>
-                                <input type="text" name="login" class="form-control" id="login" placeholder="Login" value="<?= isset($_SESSION['form_data']['login']) ? $_SESSION['form_data']['login'] : '' ?>" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <label for="pasword">Password</label>
-                                <input type="password" name="password" class="form-control" id="pasword" placeholder="Password" value="<?= isset($_SESSION['form_data']['password']) ? $_SESSION['form_data']['password'] : '' ?>" data-minlength="6" data-error="Пароль должен включать не менее 6 символов" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <label for="name">Имя</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Имя" value="<?= isset($_SESSION['form_data']['name']) ? $_SESSION['form_data']['name'] : '' ?>" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="<?= isset($_SESSION['form_data']['email']) ? $_SESSION['form_data']['email'] : '' ?>" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <label for="address">Address</label>
-                                <input type="text" name="address" class="form-control" id="address" placeholder="Address" value="<?= isset($_SESSION['form_data']['address']) ? $_SESSION['form_data']['address'] : '' ?>" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            </div>
-                            <?php endif; ?>
+                   <div class="col-md-6 account-left">
+                        <form method="post" action="{{route("cart.checkout")}}" role="form" data-toggle="validator">
                             <div class="form-group">
+                                @csrf
                                 <label for="address">Note</label>
                                 <textarea name="note" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-default">Оформить</button>
                         </form>
-                            <?php if(isset($_SESSION['form_data'])) unset($_SESSION['form_data']); ?>
-                    </div>--}}
+                    </div>
                     @else
                     <h3>Корзина пуста</h3>
                     @endif
