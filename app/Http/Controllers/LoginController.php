@@ -38,11 +38,9 @@ class LoginController extends Controller
         $credentials = $request->only('login', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Аутентификация успешна
             return redirect()->route('main.index');
         }
 
-        // Если аутентификация не удалась
         return back()->withErrors([
             'email' => 'Неверный email или пароль.',
         ]);

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Middleware\authAdminMW;
 use App\Http\Middleware\authMW;
+use App\Http\Middleware\guestAdminMW;
 use App\Http\Middleware\guestMW;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +25,11 @@ Route::get('/catalog/{category:alias}', 'App\Http\Controllers\CatalogController@
 
 Route::get('/register', 'App\Http\Controllers\RegisterController@index')->name('register.index')->middleware(guestMW::class);
 Route::post('/register', 'App\Http\Controllers\RegisterController@create')->name('register.create')->middleware(guestMW::class);
-
 Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login.index')->middleware(guestMW::class);
 Route::post('/login', 'App\Http\Controllers\LoginController@login')->name('login.login')->middleware(guestMW::class);
 Route::get('/login/logout', 'App\Http\Controllers\LoginController@logout')->name('login.logout')->middleware(authMW::class);
 
+Route::get('/admin/login', 'App\Http\Controllers\admin\LoginController@index')->name('admin.login.index')->middleware(guestAdminMW::class);
+Route::post('/admin/login', 'App\Http\Controllers\admin\LoginController@login')->name('admin.login.login')->middleware(guestAdminMW::class);
+
+Route::get('/admin', 'App\Http\Controllers\admin\LoginController@index')->name('admin.index')->middleware(authAdminMW::class);
