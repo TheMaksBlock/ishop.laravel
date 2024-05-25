@@ -32,4 +32,4 @@ Route::get('/login/logout', 'App\Http\Controllers\LoginController@logout')->name
 Route::get('/admin/login', 'App\Http\Controllers\admin\LoginController@index')->name('admin.login.index')->middleware(guestAdminMW::class);
 Route::post('/admin/login', 'App\Http\Controllers\admin\LoginController@login')->name('admin.login.login')->middleware(guestAdminMW::class);
 
-Route::get('/admin', 'App\Http\Controllers\admin\LoginController@index')->name('admin.index')->middleware(authAdminMW::class);
+Route::get('/admin', 'App\Http\Controllers\admin\MainController@index')->name('admin.index')->middleware(authAdminMW::class);

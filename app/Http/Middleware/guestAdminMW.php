@@ -10,8 +10,10 @@ class guestAdminMW
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() || Auth::user()->role === 'admin') {
-            return redirect()->route("admin.index");
+        if (Auth::check()) {
+            if(Auth::user()->role === 'admin'){
+                return redirect()->route("admin.index");
+            }
         }
 
         return $next($request);
