@@ -34,4 +34,5 @@ Route::post('/admin/login', 'App\Http\Controllers\admin\LoginController@login')-
 
 Route::get('/admin', 'App\Http\Controllers\admin\MainController@index')->name('admin.index')->middleware(authAdminMW::class);
 
-Route::get('/admin/orders', 'App\Http\Controllers\admin\OrderController@index')->name('admin.order.index')->middleware(authAdminMW::class);
+Route::get('/admin/order', 'App\Http\Controllers\admin\OrderController@index')->name('admin.order.index')->middleware(authAdminMW::class);
+Route::get('/admin/order/delete', 'App\Http\Controllers\admin\OrderController@delete')->name('admin.order.delete')->middleware(authAdminMW::class);

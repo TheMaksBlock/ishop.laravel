@@ -15,7 +15,7 @@ class OrderService {
     public function __construct() {
     }
 
-    public function getOrders($perpage = 10) {
+    public function getOrders($confirmed_orders = '',$perpage = 10) {
 
         $query = Order::query();
         $query = $query->select(
@@ -44,6 +44,19 @@ class OrderService {
             )
             ->orderBy('order.id');
 
+        if($confirmed_orders){
+            $query=$query->where("order.status = '0'");
+        }
+
         return $query->paginate($perpage);
+    }
+
+    public function delete($id) {
+        $order = Order::find($id);
+        if($order){
+            $order->delete();
+            return true;
+        }
+        return false;
     }
 }
