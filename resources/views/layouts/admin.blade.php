@@ -22,9 +22,11 @@
     <!-- jvectormap -->
     <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jvectormap/jquery-jvectormap.css') }}">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 
@@ -36,7 +38,8 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -76,7 +79,8 @@
                                     <li><!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                <img src="dist/img/user2-160x160.jpg" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 Support Team
@@ -89,7 +93,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="dist/img/user3-128x128.jpg" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 AdminLTE Design Team
@@ -101,7 +106,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="dist/img/user4-128x128.jpg" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 Developers
@@ -113,7 +119,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="dist/img/user3-128x128.jpg" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 Sales Department
@@ -125,7 +132,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="dist/img/user4-128x128.jpg" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 Reviewers
@@ -157,7 +165,8 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
+                                            may not fit into the
                                             page and may cause design problems
                                         </a>
                                     </li>
@@ -199,7 +208,8 @@
                                                 <small class="pull-right">20%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                     role="progressbar"
                                                      aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                     <span class="sr-only">20% Complete</span>
                                                 </div>
@@ -214,7 +224,8 @@
                                                 <small class="pull-right">40%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                                                <div class="progress-bar progress-bar-green" style="width: 40%"
+                                                     role="progressbar"
                                                      aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                     <span class="sr-only">40% Complete</span>
                                                 </div>
@@ -229,7 +240,8 @@
                                                 <small class="pull-right">60%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
+                                                <div class="progress-bar progress-bar-red" style="width: 60%"
+                                                     role="progressbar"
                                                      aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                     <span class="sr-only">60% Complete</span>
                                                 </div>
@@ -244,7 +256,8 @@
                                                 <small class="pull-right">80%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
+                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"
+                                                     role="progressbar"
                                                      aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                     <span class="sr-only">80% Complete</span>
                                                 </div>
@@ -339,7 +352,8 @@
                 <li class="header">Меню</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li><a href="{{route("admin.index")}}"><i class="fa fa-home"></i> <span>Home</span></a></li>
-                <li><a href="{{route("admin.order.index")}}"><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a></li>
+                <li><a href="{{route("admin.order.index")}}"><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a>
+                </li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-navicon"></i> <span>Категории</span>
                         <span class="pull-right-container">
@@ -381,17 +395,20 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        {{--<?php if(isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger">
-                <?php echo $_SESSION['error'];unset($_SESSION['error'])?>
-        </div>
-        <?php endif;?>
-        <?php if(isset($_SESSION['success'])): ?>
-        <div class="alert alert-success">
-                <?php echo $_SESSION['success'];unset($_SESSION['success'])?>
-        </div>
-        <?php endif;?>--}}
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         @yield('content')
     </div>
     <!-- /.content-wrapper -->
