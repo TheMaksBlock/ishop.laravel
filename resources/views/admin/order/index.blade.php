@@ -22,9 +22,6 @@
                     <div class="box">
                         <div class="box-body">
                             <div class="table-responsive">
-                                <div class="get-confirmed-orders">
-                                    <input type="checkbox" name="checkbox"><i></i>Показывать завершённые заказы
-                                </div>
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -50,7 +47,7 @@
                                         <td>{{ $order['note']}}</td>
                                         <td><a href=""><i
                                                     class="fa fa-eye"></i></a>
-                                            <a href=""
+                                            <a href="{{route('admin.order.delete')}}?id={{$order['id']}}"
                                                class="fa fa-trash delete"></a></td>
                                     </tr>
                                     @endforeach

@@ -24,7 +24,7 @@ class OrderService {
         $order->currency = $currency['code'];
         $order->save();
 
-        $this->saveOrderProduct($order->id);
+        $this->saveOrderProduct($order->id,$products);
         CartService::clear();
         return $order->id;
     }
