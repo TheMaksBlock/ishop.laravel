@@ -33,3 +33,5 @@ Route::get('/admin/login', 'App\Http\Controllers\admin\LoginController@index')->
 Route::post('/admin/login', 'App\Http\Controllers\admin\LoginController@login')->name('admin.login.login')->middleware(guestAdminMW::class);
 
 Route::get('/admin', 'App\Http\Controllers\admin\MainController@index')->name('admin.index')->middleware(authAdminMW::class);
+
+Route::get('/admin/orders', 'App\Http\Controllers\admin\OrderController@index')->name('admin.order.index')->middleware(authAdminMW::class);

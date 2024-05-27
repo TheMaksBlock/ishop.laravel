@@ -338,8 +338,8 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Меню</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href=""><i class="fa fa-home"></i> <span>Home</span></a></li>
-                <li><a href=""><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a></li>
+                <li><a href="{{route("admin.index")}}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                <li><a href="{{route("admin.order.index")}}"><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-navicon"></i> <span>Категории</span>
                         <span class="pull-right-container">

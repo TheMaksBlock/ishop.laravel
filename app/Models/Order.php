@@ -11,4 +11,14 @@ class Order extends Model
     protected $table  = 'order';
     protected $guarded = [];
     public $timestamps = false;
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
