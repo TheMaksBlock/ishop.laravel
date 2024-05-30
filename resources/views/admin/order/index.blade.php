@@ -45,7 +45,7 @@
                                         <td>{{ $order['date']}}</td>
                                         <td>{{ $order['update_at']}}</td>
                                         <td>{{ $order['note']}}</td>
-                                        <td><a href=""><i
+                                        <td><a href="{{route("admin.order.show", $order['id'])}}"><i
                                                     class="fa fa-eye"></i></a>
                                             <a href="{{route('admin.order.delete')}}?id={{$order['id']}}"
                                                class="fa fa-trash delete"></a></td>

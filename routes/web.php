@@ -36,3 +36,5 @@ Route::get('/admin', 'App\Http\Controllers\admin\MainController@index')->name('a
 
 Route::get('/admin/order', 'App\Http\Controllers\admin\OrderController@index')->name('admin.order.index')->middleware(authAdminMW::class);
 Route::get('/admin/order/delete', 'App\Http\Controllers\admin\OrderController@delete')->name('admin.order.delete')->middleware(authAdminMW::class);
+Route::get('/admin/order/change', 'App\Http\Controllers\admin\OrderController@change')->name('admin.order.change-status')->middleware(authAdminMW::class);
+Route::get('/admin/order/{orderId}', 'App\Http\Controllers\admin\OrderController@show')->name('admin.order.show')->middleware(authAdminMW::class);

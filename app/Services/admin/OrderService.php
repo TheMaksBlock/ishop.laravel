@@ -51,10 +51,50 @@ class OrderService {
         return $query->paginate($perpage);
     }
 
+    public function getOrder($id) {
+        return Order::select(
+            'order.id',
+            'order.user_id',
+            'order.status',
+            'order.date',
+            'order.update_at',
+            'order.currency',
+            'order.note',
+            'users.name',
+            DB::raw('ROUND(SUM(order_product.price), 2) AS sum')
+        )
+            ->leftJoin('order_product', 'order_product.order_id', '=', 'order.id')
+            ->leftJoin('product', 'product.id', '=', 'order_product.product_id')
+            ->leftJoin('users', 'users.id', '=', 'order.user_id')
+            ->where('order.id', '=', $id)
+            ->groupBy(
+                'order.id',
+                'order.user_id',
+                'order.status',
+                'order.date',
+                'order.update_at',
+                'order.currency',
+                'order.note',
+                'users.name'
+            )
+            ->orderBy('order.id')->first();
+    }
+
     public function delete($id) {
         $order = Order::find($id);
         if($order){
             $order->delete();
+            return true;
+        }
+        return false;
+    }
+
+    public function change($id, $status) {
+        $order = Order::find($id);
+        if($order){
+            $order->status = $status;
+            $order->update_at = date("Y-m-d H:i:s");
+            $order->save();
             return true;
         }
         return false;
