@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Services\admin\CacheService;
 use App\Services\CategoriesMenuService;
 use Illuminate\Http\Request;
 
@@ -25,11 +26,32 @@ class CategoryController extends Controller {
     }
 
     public function delete(Request $request) {
+        $id = $request->get('id');
+        $category = Category::find($id);
+        $childs = $category->childs();
 
+        $errors = '';
+
+        if($childs->count() > 0) {
+            $errors .= 'Вы не можете удалить категорию, которая содержит другие категории';
+        }
+
+        $products = $category->products();
+
+       /* if($products->count() > 0){
+            $errors .= 'Вы не можете удалить категорию, которая содержит товары';
+        }
+
+        if($errors){
+            return redirect()->route('admin.category.index')->withErrors($errors);
+        }
+
+        $category->delete();*/
+        CacheService::forgetGroup("Категории");
+        return redirect()->route('admin.category.index')->with(["success"=>"Категория удалена"]);
     }
 
     public function edit() {
-
     }
 
 
