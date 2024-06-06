@@ -10,17 +10,17 @@ class CategoriesMenuService {
     protected $data;
     protected $tree;
     protected $menuHtml;
-    protected $tpl;
+    protected $tpl = 'templates.menu_tpl';
     protected $container = 'ul';
     protected $class = 'menu';
     protected $table = 'category';
     protected $cache = 3600;
     protected $cachekey = 'ishop_menu';
     protected $attrs = [];
-    protected $prepend = '';
+    protected $prepend;
 
     public function __construct($options = []) {
-        $this->tpl = 'templates.menu_tpl';
+        $this->prepend = "<li> <a href=\"". route('catalog.index') . "\">Все товары</a>      </li>";
         $this->getOptions($options);
         $this->run();
     }
@@ -76,9 +76,7 @@ class CategoriesMenuService {
     }
 
     protected function getMenuHtml($tree, $tab = '') {
-        $str = "<li>
-            <a href=\"" . route('catalog.index') . "\">Все товары</a>
-        </li>";
+        $str = '';
         foreach ($tree as $id => $category) {
             $str .= $this->catToTemplate($category, $tab, $id);
         }

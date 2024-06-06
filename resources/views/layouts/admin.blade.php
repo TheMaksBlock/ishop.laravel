@@ -64,7 +64,7 @@
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
                     <li>
-                        <a href=""><span class="fa fa-home"></span> </a>
+                        <a href="{{route('main.index')}}"><span class="fa fa-home"></span> </a>
                     </li>
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -361,7 +361,7 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="">Список категорий</a></li>
+                        <li><a href="{{route('admin.category.index')}}">Список категорий</a></li>
                         <li><a href="">Добавить категорию</a></li>
                     </ul>
                 </li>
