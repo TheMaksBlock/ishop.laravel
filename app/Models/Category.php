@@ -9,9 +9,10 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
+    public $timestamps = false;
 
     public function childs(){
-        return $this->hasMany(Category::class, 'parent_id', 'id')->get();
+        return $this->hasMany(__CLASS__, 'parent_id', 'id')->get();
     }
 
     public function products(){

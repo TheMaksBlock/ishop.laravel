@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', "Список заказов")
+@section('title', "Список категорий")
 @section('content')
     <div class="order-content">
         <section class="content-header">
