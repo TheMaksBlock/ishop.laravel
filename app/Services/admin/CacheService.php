@@ -11,7 +11,7 @@ use function PHPUnit\Framework\isEmpty;
 
 class CacheService {
 
-    private static $cats = ["Категории" => ["ishop_menu", "admin_cat"]];
+    private static $cats = ["Категории" => ["ishop_menu", "admin_cat", "admin_select"]];
 
     public static function forgetGroup(string $name): void {
         if (isset(self::$cats[$name])) {

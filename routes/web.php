@@ -40,5 +40,6 @@ Route::get('/admin/order/change', 'App\Http\Controllers\admin\OrderController@ch
 Route::get('/admin/order/{orderId}', 'App\Http\Controllers\admin\OrderController@show')->name('admin.order.show')->middleware(authAdminMW::class);
 
 Route::get('/admin/category', 'App\Http\Controllers\admin\CategoryController@index')->name('admin.category.index')->middleware(authAdminMW::class);
-Route::get('/admin/category/edit', 'App\Http\Controllers\admin\CategoryController@edit')->name('admin.category.edit')->middleware(authAdminMW::class);
 Route::get('/admin/category/delete', 'App\Http\Controllers\admin\CategoryController@delete')->name('admin.category.delete')->middleware(authAdminMW::class);
+Route::get('/admin/category/{category:id}/edit', 'App\Http\Controllers\admin\CategoryController@edit')->name('admin.category.edit')->middleware(authAdminMW::class);
+Route::put('/admin/category/{category:id}', 'App\Http\Controllers\admin\CategoryController@update')->name('admin.category.update')->middleware(authAdminMW::class);

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class CategoriesMenuService {
 
-    protected $data;
     protected $tree;
     protected $menuHtml;
     protected $tpl = 'templates.menu_tpl';
@@ -18,10 +17,13 @@ class CategoriesMenuService {
     protected $cachekey = 'ishop_menu';
     protected $attrs = [];
     protected $prepend;
+    protected $data = [];
+    protected $params = [];
 
-    public function __construct($options = []) {
+    public function __construct($options = [], $params = []) {
         $this->prepend = "<li> <a href=\"". route('catalog.index') . "\">Все товары</a>      </li>";
         $this->getOptions($options);
+        $this->params = $params;
         $this->run();
     }
 
@@ -75,16 +77,16 @@ class CategoriesMenuService {
         return $tree;
     }
 
-    protected function getMenuHtml($tree, $tab = '') {
+    protected function getMenuHtml($tree) {
         $str = '';
         foreach ($tree as $id => $category) {
-            $str .= $this->catToTemplate($category, $tab, $id);
+            $str .= $this->catToTemplate($category,$id);
         }
 
         return $str;
     }
 
-    protected function catToTemplate($category, $tab, $id) {
-        return view($this->tpl, compact('category', 'tab', 'id'))->render();
+    protected function catToTemplate($category,$id) {
+        return view($this->tpl, $this->params+compact('category', 'id'))->render();
     }
 }

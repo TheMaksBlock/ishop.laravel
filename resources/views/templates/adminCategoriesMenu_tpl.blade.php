@@ -5,7 +5,7 @@
 @endphp
 
 <p class="item-p">
-    <a class="list-group-item" href="{{ route('admin.category.edit', ['id' => $id]) }}">{{ $category->title }}</a>
+    <a class="list-group-item" href="{{ route('admin.category.edit', ['category' => $id]) }}">{{ $category->title }}</a>
     <span>{!! $delete !!}</span>
 </p>
 
