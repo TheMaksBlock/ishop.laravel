@@ -43,3 +43,6 @@ Route::get('/admin/category', 'App\Http\Controllers\admin\CategoryController@ind
 Route::get('/admin/category/delete', 'App\Http\Controllers\admin\CategoryController@delete')->name('admin.category.delete')->middleware(authAdminMW::class);
 Route::get('/admin/category/{category:id}/edit', 'App\Http\Controllers\admin\CategoryController@edit')->name('admin.category.edit')->middleware(authAdminMW::class);
 Route::put('/admin/category/{category:id}', 'App\Http\Controllers\admin\CategoryController@update')->name('admin.category.update')->middleware(authAdminMW::class);
+Route::get('/admin/category/create', 'App\Http\Controllers\admin\CategoryController@create')->name('admin.category.create')->middleware(authAdminMW::class);
+Route::post('/admin/category', 'App\Http\Controllers\admin\CategoryController@store')->name('admin.category.store')->middleware(authAdminMW::class);
+

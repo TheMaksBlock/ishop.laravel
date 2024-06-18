@@ -362,7 +362,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{route('admin.category.index')}}">Список категорий</a></li>
-                        <li><a href="">Добавить категорию</a></li>
+                        <li><a href="{{route('admin.category.create')}}">Добавить категорию</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

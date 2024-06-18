@@ -31,7 +31,7 @@ class CategoryController extends Controller {
         $id = $request->get('id');
         $category = Category::find($id);
 
-        if ($category) {
+        if (!$category) {
             abort(404);
         }
 
@@ -58,14 +58,13 @@ class CategoryController extends Controller {
 
     public function edit(Category $category) {
         $categoriesMenuService = new CategoriesMenuService(
-            ['tpl' => 'templates.adminCategoriesMenu_tpl',
-                'tpl' => 'templates.adminSelectCategory_tpl',
+            ['tpl' => 'templates.adminSelectCategory_tpl',
                 'container' => 'select',
                 'cachekey' => 'admin_select',
                 'class' => 'form-control',
                 'prepend' => '<option value="0">Самостоятельная категория</option>',
                 'cache' => 0,
-                "attrs" => ["name"=>"parent_id"]],
+                "attrs" => ["name" => "parent_id"]],
 
             ["parent_id" => $category->parent_id,
                 'currentId' => $category->id]);
@@ -78,8 +77,8 @@ class CategoryController extends Controller {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'parent_id' => "required",
-            'keywords' => 'string|max:255',
-            'description' => 'string|max:255'
+            'keywords' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -89,7 +88,7 @@ class CategoryController extends Controller {
         }
 
         if ($category->title != $request->get('title')) {
-            $alias = AliasService::createAlias('category', 'alias', $request->get('title'), $category->id);
+            $alias = AliasService::createAlias('category', 'alias', $request->get('title'));
         } else {
             $alias = $category->alias;
         }
@@ -106,30 +105,50 @@ class CategoryController extends Controller {
         return redirect()->route('admin.category.edit', ['category' => $category->id])->with('success', 'Категория отредактирована');
     }
 
+    public function create() {
+        $categoriesMenuService = new CategoriesMenuService(
+            ['tpl' => 'templates.adminSelectCategory_tpl',
+                'container' => 'select',
+                'cachekey' => 'admin_select',
+                'class' => 'form-control',
+                'prepend' => '<option value="0">Самостоятельная категория</option>',
+                'cache' => 0,
+                "attrs" => ["name" => "parent_id"]]);
+        $category_menu = $categoriesMenuService->get();
 
-    /* public function deleteAction()
+        return view('admin.category.create', compact('category_menu'));
+    }
 
-     public function addAction(){
-         if(!empty($_POST))
-         {
-             $categrory = new Category();
-             $data = $_POST;
-             $categrory->load($data);
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'parent_id' => "required",
+            'keywords' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255'
+        ]);
 
-             if(!$categrory->validate($data)){
-                 $categrory->getErrors();
-                 redirect();
-             }
-             if($id = $categrory->save('category')){
-                 $alias = AppModel::createAlias('category', 'alias', $data['title'], $id);
-                 $cat = R::load('category', $id);
-                 $cat->alias = $alias;
-                 R::store($cat);
-                 $_SESSION['success'] = 'Категория добавлена';
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-             }
-             redirect();
-         }
-         $this->setMeta("Новая категорий");
-     }*/
+        $category = Category::create([
+            'title' => $request->get('title'),
+            'parent_id' => $request->get('parent_id'),
+            'keywords' => $request->get('keywords'),
+            'description' => $request->get('description'),
+            'alias' => AliasService::createAlias('category', 'alias', $request->get('title'))
+        ]);
+
+
+        if ($category) {
+            CacheService::forgetGroup("Категории");
+            return redirect()->route('admin.category.index')->with('success', "Категория успешно добавлена");
+        }
+
+        return redirect()->route('admin.category.index')
+            ->withErrors("Произошла ошибка при создании категории")
+            ->withInput();
+    }
 }

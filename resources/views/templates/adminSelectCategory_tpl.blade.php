@@ -2,6 +2,14 @@
     if(!isset($tab)){
         $tab = " ";
     }
+
+    if(!isset($currentId)){
+        $currentId = null;
+    }
+
+    if(!isset($parent_id)){
+        $parent_id = null;
+    }
 @endphp
 
 <option value="{{ $id }}"

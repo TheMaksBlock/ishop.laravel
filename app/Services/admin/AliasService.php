@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\DB;
 
 class AliasService {
 
-    public static function createAlias(string $table, string $field,string $str,int $id): string {
+    public static function createAlias(string $table, string $field,string $str,int $id=1): string {
         $str = self::str2url($str);
         $res = DB::table($table)->where($field, $str)->get();
         if ($res->count() > 0) {
             $str = "$str-$id";
-            $res = DB::table($table)->where($field, $str)->get();
+            $res = DB::table($table)->where($field, "$str-$id")->get();
             if ($res->count() > 0) {
-                $str = self::createAlias($table, $field, $str, $id);
+                $str = self::createAlias($table, $field, $str, $id++);
             }
         }
         return $str;
