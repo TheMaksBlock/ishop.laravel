@@ -46,3 +46,8 @@ Route::put('/admin/category/{category:id}', 'App\Http\Controllers\admin\Category
 Route::get('/admin/category/create', 'App\Http\Controllers\admin\CategoryController@create')->name('admin.category.create')->middleware(authAdminMW::class);
 Route::post('/admin/category', 'App\Http\Controllers\admin\CategoryController@store')->name('admin.category.store')->middleware(authAdminMW::class);
 
+Route::get('/admin/cache', 'App\Http\Controllers\admin\CacheController@index')->name('admin.cache.index')->middleware(authAdminMW::class);
+Route::get('/admin/cache/forget', 'App\Http\Controllers\admin\CacheController@forget')->name('admin.cache.forget')->middleware(authAdminMW::class);
+Route::get('/admin/cache/forgetGroup', 'App\Http\Controllers\admin\CacheController@forgetGroup')->name('admin.cache.forgetGroup')->middleware(authAdminMW::class);
+Route::get('/admin/cache/forgetAll', 'App\Http\Controllers\admin\CacheController@forgetAll')->name('admin.cache.forgetAll')->middleware(authAdminMW::class);
+

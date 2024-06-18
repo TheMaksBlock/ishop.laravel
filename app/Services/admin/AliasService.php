@@ -10,10 +10,9 @@ class AliasService {
         $str = self::str2url($str);
         $res = DB::table($table)->where($field, $str)->get();
         if ($res->count() > 0) {
-            $str = "$str-$id";
             $res = DB::table($table)->where($field, "$str-$id")->get();
             if ($res->count() > 0) {
-                $str = self::createAlias($table, $field, $str, $id++);
+                $str = self::createAlias($table, $field, $str, ++$id);
             }
         }
         return $str;

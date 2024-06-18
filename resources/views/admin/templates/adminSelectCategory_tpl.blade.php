@@ -20,6 +20,6 @@
 
 @if (isset($category->childs))
     @foreach($category->childs as $id => $child)
-        @include('templates.adminSelectCategory_tpl', ['category' => $child, '$currentId' => $currentId, "id" => $id, 'tab'=>$tab . '-'])
+        @include('admin.templates.adminSelectCategory_tpl', ['category' => $child, '$currentId' => $currentId, "id" => $id, 'tab'=>$tab . '-'])
     @endforeach
 @endif

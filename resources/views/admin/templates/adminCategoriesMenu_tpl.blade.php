@@ -12,7 +12,7 @@
 @if ($parent)
     <div class="list-group">
         @foreach($category->childs as $child)
-            @include('templates.adminCategoriesMenu_tpl', ['category' => $child])
+            @include('admin.templates.adminCategoriesMenu_tpl', ['category' => $child])
         @endforeach
 
     </div>

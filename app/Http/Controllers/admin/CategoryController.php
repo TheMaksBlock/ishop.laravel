@@ -18,7 +18,7 @@ class CategoryController extends Controller {
     }
 
     public function index() {
-        $categoriesMenuService = new CategoriesMenuService(['tpl' => 'templates.adminCategoriesMenu_tpl',
+        $categoriesMenuService = new CategoriesMenuService(['tpl' => 'admin.templates.adminCategoriesMenu_tpl',
             "prepend" => "",
             'class' => 'list-group list-group-root well',
             'container' => 'div',
@@ -58,7 +58,7 @@ class CategoryController extends Controller {
 
     public function edit(Category $category) {
         $categoriesMenuService = new CategoriesMenuService(
-            ['tpl' => 'templates.adminSelectCategory_tpl',
+            ['tpl' => 'admin.templates.adminSelectCategory_tpl',
                 'container' => 'select',
                 'cachekey' => 'admin_select',
                 'class' => 'form-control',
