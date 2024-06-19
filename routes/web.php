@@ -49,5 +49,9 @@ Route::post('/admin/category', 'App\Http\Controllers\admin\CategoryController@st
 Route::get('/admin/cache', 'App\Http\Controllers\admin\CacheController@index')->name('admin.cache.index')->middleware(authAdminMW::class);
 Route::get('/admin/cache/forget', 'App\Http\Controllers\admin\CacheController@forget')->name('admin.cache.forget')->middleware(authAdminMW::class);
 Route::get('/admin/cache/forgetGroup', 'App\Http\Controllers\admin\CacheController@forgetGroup')->name('admin.cache.forgetGroup')->middleware(authAdminMW::class);
-Route::get('/admin/cache/forgetAll', 'App\Http\Controllers\admin\CacheController@forgetAll')->name('admin.cache.forgetAll')->middleware(authAdminMW::class);
+Route::get('/admin/cache/forgetAll', 'App\Http\Controllers\admin\CacheController@forgetAll')->name('admin.cache.forgetAll');
+
+Route::get('/admin/user', 'App\Http\Controllers\admin\UserController@index')->name('admin.user.index')->middleware(authAdminMW::class);
+Route::get('/admin/user/{user:id}/edit', 'App\Http\Controllers\admin\UserController@edit')->name('admin.user.edit')->middleware(authAdminMW::class);
+Route::put('/admin/user/{user:id}', 'App\Http\Controllers\admin\UserController@update')->name('admin.user.update')->middleware(authAdminMW::class);
 

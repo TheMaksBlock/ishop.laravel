@@ -99,4 +99,15 @@ class OrderService {
         }
         return false;
     }
+
+    public function getUserOrders($user) {
+        $orders = $user->orders()->get();
+        $userOrders = array();
+
+        foreach ($orders as $order){
+            $userOrders[] = $this->getOrder($order->id);
+        }
+
+        return $userOrders;
+    }
 }
