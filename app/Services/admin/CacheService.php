@@ -16,6 +16,7 @@ class CacheService {
     private static $link = "admin.cache.forget";
     private static $groupLink = "admin.cache.forgetGroup";
     private static $allLink = "admin.cache.forgetAll";
+    private static $cashKey = "cashMenu";
 
     public static function forgetGroup(string $name): void {
         if (isset(self::$cats[$name])) {
@@ -29,6 +30,8 @@ class CacheService {
         foreach (self::$cats as $key=>$value) {
             self::forgetGroup($key);
         }
+
+        Cache::forget(self::$cashKey);
     }
 
     public static function forget(string $key): void {
@@ -38,9 +41,13 @@ class CacheService {
     }
 
     public static function getHtml() {
-        $str = '<div class="list-group list-group-root well">';
+        if(Cache::has(self::$cashKey)){
+            return Cache::get(self::$cashKey);
+        }
+        else{
+            $str = '<div class="list-group list-group-root well">';
 
-        $str .= '<p class="item-p">
+            $str .= '<p class="item-p">
             <a class="list-group-item">Очистить всё</a>
             <span>
                 <a href="'.route(self::$allLink).'" class="delete">
@@ -49,17 +56,22 @@ class CacheService {
             </span>
         </p>';
 
-        foreach (self::$cats as $key => $value) {
-            $str .= self::getTemplate($key, $key, self::$groupLink);
-            $str .= '<div class="list-group">';
-            foreach ($value as $k => $v) {
-                $str .= self::getTemplate($k, $v, self::$link);
+            foreach (self::$cats as $key => $value) {
+                $str .= self::getTemplate($key, $key, self::$groupLink);
+                $str .= '<div class="list-group">';
+                foreach ($value as $k => $v) {
+                    $str .= self::getTemplate($k, $v, self::$link);
+                }
+                $str .= "</div>";
             }
-            $str .= "</div>";
-        }
 
-        $str .= "</div>";
-        return $str;
+            $str .= "</div>";
+
+
+            Cache::put(self::$cashKey, $str);
+
+            return $str;
+        }
     }
 
     private static function getTemplate($key, $value, $path) {
