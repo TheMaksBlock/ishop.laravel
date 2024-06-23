@@ -56,6 +56,9 @@ Route::get('/admin/user/{user:id}/edit', 'App\Http\Controllers\admin\UserControl
 Route::put('/admin/user/{user:id}', 'App\Http\Controllers\admin\UserController@update')->name('admin.user.update')->middleware(authAdminMW::class);
 
 Route::get('/admin/product', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.products.index')->middleware(authAdminMW::class);
-Route::get('/admin/product/edit', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.edit')->middleware(authAdminMW::class);
-Route::get('/admin/product/delete', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.delete')->middleware(authAdminMW::class);
+Route::get('/admin/product/create', 'App\Http\Controllers\admin\ProductsController@create')->name('admin.product.create')->middleware(authAdminMW::class);
+Route::post('/admin/product/store', 'App\Http\Controllers\admin\ProductsController@store')->name('admin.product.store')->middleware(authAdminMW::class);
+Route::get('/admin/product/{product:product}/edit', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.edit')->middleware(authAdminMW::class);
+Route::get('/admin/product/{product:product}/delete', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.delete')->middleware(authAdminMW::class);
+Route::get('/dfsfdfds', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.add-image')->middleware(authAdminMW::class);
 

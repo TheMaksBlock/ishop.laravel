@@ -23,32 +23,9 @@
 <!--End-slider-script-->
 <!--about-starts-->
 
-@if ($brands)
-<div class="about">
-    <div class="container">
-        <div class="about-top grid-1">
-            @foreach ($brands as $brand)
-            <div class="col-md-4 about-left">
-
-                <figure class="effect-bubba">
-                    <img class="img-responsive" src="/images/<?= $brand->img; ?>" alt=""/>
-                    <figcaption>
-                        <h2><?= $brand->title; ?></h2>
-                        <p><?= $brand->description; ?></p>
-                    </figcaption>
-                </figure>
-            </div>
-            @endforeach
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-@endif
-<!--about-end-->
-<!--product-starts-->
 
 @if ($hits)
-<div class="product">
+<div class="product >
     <div class="container">
         <div class="product-top">
             <div class="product-one">

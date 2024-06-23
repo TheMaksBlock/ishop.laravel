@@ -373,7 +373,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{route('admin.products.index')}}">Список товаров</a></li>
-                        <li><a href="">Добавить товар</a></li>
+                        <li><a href="{{route('admin.product.create')}}">Добавить товар</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('admin.cache.index')}}"><i class="fa fa-database"></i> <span>Кэширование</span></a></li>
@@ -611,8 +611,8 @@
 <script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js')}}"></script>
-<script src="{{ asset('adminlte/my.js')}}"></script>
 <script src="{{ asset('adminlte/bower_components/ckeditor/ckeditor.js')}}"></script>
+<script src="{{ asset('adminlte/my.js')}}"></script>
 </body>
 </html>
 
