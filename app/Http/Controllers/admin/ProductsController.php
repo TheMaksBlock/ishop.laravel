@@ -5,17 +5,19 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\admin\AliasService;
-use App\Services\admin\OrderService;
+use App\Services\admin\ImageService;
 use App\Services\CategoriesMenuService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use function Laravel\Prompts\error;
-
 
 class ProductsController extends Controller {
+    private $imageService;
     private $perpage = 10;
 
-    public function __construct() {
+    public function __construct(ImageService $imageService) {
+        $this->imageService = $imageService;
     }
 
     public function index() {
@@ -24,6 +26,8 @@ class ProductsController extends Controller {
     }
 
     public function create() {
+        $this->imageService->clear();
+
         $categoriesMenuService = new CategoriesMenuService(
             ['tpl' => 'admin.templates.adminSelectCategory_tpl',
                 'container' => 'select',
@@ -58,22 +62,35 @@ class ProductsController extends Controller {
                 ->withInput();
         }
 
-
         $product = new Product();
         $product->title = $request->input('title');
         $product->category_id = $request->input('category_id');
         $product->keywords = $request->input('keywords');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
-        $product->old_price = $request->input('old_price');
+        $product->old_price = $request->input('old_price')??0;
         $product->content = $request->input('content');
         $product->status = $request->has('status')?'1':'0';
         $product->hit = $request->has('hit')?'1':'0';
         $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
-
         $product->save();
 
+        $this->imageService->insetrGalery($product->id);
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
+    }
 
+    public function addImage(Request $request){
+        if($name = $request->get('name')){
+            if($name){
+                $params = Config::get('params.single');
+            }else{
+                $params = Config::get('params.multi');
+            }
+            $wmax = $params['width'];
+            $hmax = $params['height'];
+
+            return  $this->imageService->uploadImg($name, $wmax, $hmax,$request->file($name));
+        }
+        return Response::json(['error' => 'Ошибка загрузки файла!'], 400);
     }
 }

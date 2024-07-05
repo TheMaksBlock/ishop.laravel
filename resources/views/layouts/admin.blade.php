@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="/public/images/star.png" type="image/png">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="/adminlte/">
     <title>@yield('title')</title>
     <!-- Bootstrap 3.3.7 -->
@@ -49,9 +50,7 @@
         <a href="" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
-            <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>Admin</b>LTE</span>
-            <!-- logo for regular state and mobile devices -->
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -603,15 +602,14 @@
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
 
 <script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.js')}}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('adminlte/dist/js/adminlte.min.js')}}"></script>
 <script src="{{ asset('adminlte/bower_components/ckeditor/ckeditor.js')}}"></script>
+<script src="{{ asset('adminlte/bower_components/ckeditor/adapters/jquery.js')}}"></script>
+<script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('adminlte/dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('js/ajaxupload.js')}}"></script>
 <script src="{{ asset('adminlte/my.js')}}"></script>
 </body>
 </html>
