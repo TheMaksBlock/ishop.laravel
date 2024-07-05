@@ -60,7 +60,6 @@ if (buttonSingle) {
 }
 
 if (buttonMulti) {
-    console.log(buttonMulti.data('url'));
     new AjaxUpload(buttonMulti, {
         action: buttonMulti.data('url'),
         data: {
@@ -80,3 +79,24 @@ if (buttonMulti) {
         }
     });
 }
+
+$(".select2").select2({
+    placeholder: "Начните вводить наименование товара",
+    cache: true,
+    ajax: {
+        url: "http://ishop.laravel/admin/product/related-product",
+        delay: 250,
+        dataType: 'json',
+        data: function (params) {
+            return {
+                q: params.term,
+                page: params.page
+            };
+        },
+        processResults: function (data, params) {
+            return {
+                results: data.items
+            };
+        }
+    }
+});

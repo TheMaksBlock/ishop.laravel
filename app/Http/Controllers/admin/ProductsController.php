@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\RelatedProduct;
 use App\Services\admin\AliasService;
 use App\Services\admin\ImageService;
 use App\Services\CategoriesMenuService;
@@ -51,7 +52,7 @@ class ProductsController extends Controller {
             'old_price' => 'nullable|numeric',
             'content' => 'nullable|string',
             'related' => 'nullable|array',
-            'related.*' => 'exists:products,id',
+            'related.*' => 'exists:product,id',
             'single' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'multi.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -73,10 +74,22 @@ class ProductsController extends Controller {
         $product->status = $request->has('status')?'1':'0';
         $product->hit = $request->has('hit')?'1':'0';
         $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
-        $product->save();
 
-        $this->imageService->insetrGalery($product->id);
-        return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
+        if($product->save()){
+            $relatedProductIds = $request->input('related');
+            if($relatedProductIds){
+                foreach ($relatedProductIds as $relatedProductId) {
+                    RelatedProduct::create([
+                        'product_id' => $product->id,
+                        'related_id' => $relatedProductId
+                    ]);
+                }
+            }
+
+            $this->imageService->insetrGalery($product->id);
+            return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
+        }
+        return redirect()->back()->withErrors('Ошибка добавления товара')->withInput();
     }
 
     public function addImage(Request $request){
@@ -92,5 +105,24 @@ class ProductsController extends Controller {
             return  $this->imageService->uploadImg($name, $wmax, $hmax,$request->file($name));
         }
         return Response::json(['error' => 'Ошибка загрузки файла!'], 400);
+    }
+
+    public function relatedProduct(Request $request){
+        $q = $request->get('q') ?? '';
+        $data['items'] = [];
+
+        $products = Product::select('id', 'title')
+            ->where('title', 'LIKE', "%$q%")
+            ->limit(10)->get();
+
+        if($products){
+            $i = 0;
+            foreach($products as $product){
+                $data['items'][$i]['id'] = $product->id;
+                $data['items'][$i]['text'] = $product->title;
+                $i++;
+            }
+        }
+        return Response::json($data);
     }
 }

@@ -61,6 +61,7 @@ Route::post('/admin/product/store', 'App\Http\Controllers\admin\ProductsControll
 Route::get('/admin/product/{product:product}/edit', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.edit')->middleware(authAdminMW::class);
 Route::get('/admin/product/{product:product}/delete', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.delete')->middleware(authAdminMW::class);
 Route::post('/admin/product/addImage', 'App\Http\Controllers\admin\ProductsController@addImage')->name('admin.product.addImage')->middleware(authAdminMW::class);
+Route::get('/admin/product/related-product', 'App\Http\Controllers\admin\ProductsController@relatedProduct')->name('admin.product.relatedProduct');
 
 
 
