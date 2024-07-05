@@ -59,7 +59,7 @@ Route::get('/admin/product', 'App\Http\Controllers\admin\ProductsController@inde
 Route::get('/admin/product/create', 'App\Http\Controllers\admin\ProductsController@create')->name('admin.product.create')->middleware(authAdminMW::class);
 Route::post('/admin/product/store', 'App\Http\Controllers\admin\ProductsController@store')->name('admin.product.store')->middleware(authAdminMW::class);
 Route::get('/admin/product/{product}/edit', 'App\Http\Controllers\admin\ProductsController@edit')->name('admin.product.edit')->middleware(authAdminMW::class);
-Route::get('/admin/product/{product:product}/delete', 'App\Http\Controllers\admin\ProductsController@index')->name('admin.product.delete')->middleware(authAdminMW::class);
+Route::get('/admin/product/{product}/delete', 'App\Http\Controllers\admin\ProductsController@delete')->name('admin.product.delete')->middleware(authAdminMW::class);
 Route::post('/admin/product/addImage', 'App\Http\Controllers\admin\ProductsController@addImage')->name('admin.product.addImage')->middleware(authAdminMW::class);
 Route::get('/admin/product/related-product', 'App\Http\Controllers\admin\ProductsController@relatedProduct')->name('admin.product.relatedProduct')->middleware(authAdminMW::class);
 Route::put('/admin/product/{product}', 'App\Http\Controllers\admin\ProductsController@update')->name('admin.product.update')->middleware(authAdminMW::class);

@@ -193,4 +193,12 @@ class ProductsController extends Controller {
         }
         return Response::json($data);
     }
+
+    public function delete(Product $product){
+        if($product->delete()){
+            return redirect()->back()->with('success', 'Товар успешно удалён');
+        }else{
+            return redirect()->back()->withErrors('Ошибка удаления товара');
+        }
+    }
 }
