@@ -194,7 +194,7 @@
                         </ul>
                     </div>
                     <div class="latestproducts">
-                        @if ($related)
+                        @if (!$related->isEmpty())
                             <div class="product-one">
                                 <h3> С этим товаром также покупают:</h3>
                                 @foreach ($related as $rel)

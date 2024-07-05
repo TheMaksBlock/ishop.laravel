@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function show(Product $product){
         $gallery = Gallery::where('product_id',$product->id)->get();
 
-        $related = $product->getRelatedProducts();
+        $related = $product->related()->get();
 
         $recentlyViewed = $this->recentlyViewedService->getRecentlyViewedProducts($product->id);
         $this->recentlyViewedService->setRecentlyViewed($product->id);

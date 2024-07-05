@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeProduct;
 use App\Models\Product;
 use App\Models\RelatedProduct;
 use App\Services\admin\AliasService;
@@ -92,6 +93,70 @@ class ProductsController extends Controller {
 
             return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
         }
+        return redirect()->back()->withErrors('Ошибка добавления товара')->withInput();
+    }
+
+    public function edit(Product $product) {
+        $categoriesMenuService = new CategoriesMenuService(
+            ['tpl' => 'admin.templates.adminSelectCategory_tpl',
+                'container' => 'select',
+                'cachekey' => 'product_category_edit',
+                'cache' => 0,
+                'class' => 'form-control',
+                "attrs" => ["name" => "category_id"]], ['parent_id' => $product->category_id]);
+        $category_menu = $categoriesMenuService->get();
+        $related_products = $product->related()->get();
+        $this->filterService->tpl =$this->filter;
+        $attributes = AttributeProduct::where('product_id', $product->id)->pluck('attr_id')->toArray();
+        $filter_Menu = $this->filterService->getFilterHTML($attributes);
+        $gallery = $product->gallery()->get();
+
+        return view('admin.products.edit', compact('product', 'category_menu', 'related_products', 'filter_Menu','gallery'));
+    }
+
+    public function update(Request $request, Product $product){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:category,id',
+            'keywords' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'price' => 'required|numeric',
+            'old_price' => 'nullable|numeric',
+            'content' => 'nullable|string',
+            'related' => 'nullable|array',
+            'related.*' => 'exists:product,id',
+            'single' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'multi.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if($request->input('title') != $product->title) {
+            $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
+        }
+
+        $product->title = $request->input('title');
+        $product->category_id = $request->input('category_id');
+        $product->keywords = $request->input('keywords');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->old_price = $request->input('old_price')??0;
+        $product->content = $request->input('content');
+        $product->status = $request->has('status')?'1':'0';
+        $product->hit = $request->has('hit')?'1':'0';
+
+        if($product->save()){
+            $this->productService->editRelated($request->input('related'),$product->id);
+            $this->productService->editAttrs($request->input('attrs'),$product->id);
+            $this->imageService->insetrGalery($product->id);
+
+            return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
+        }
+
         return redirect()->back()->withErrors('Ошибка добавления товара')->withInput();
     }
 

@@ -50,7 +50,12 @@ class ImageService {
                 session()->push('multi', $new_name);
             }
 
-            self::resize($uploadfile, $uploadfile, $wmax, $hmax, $ext);
+            try {
+                self::resize($uploadfile, $uploadfile, $wmax, $hmax, $ext);
+            }
+            catch(\Exception $e){
+                Response::json(['error' => 'Ошибка загрузки файла!'], 400);
+            }
 
             return Response::json(['file' => $new_name]);
         }

@@ -3231,4 +3231,8 @@ form .has-error .form-control{
 	margin:-100px 0 0 -100px;
 }
 
+.product-main .img-responsive{
+    height: 180px;
+}
+
 
