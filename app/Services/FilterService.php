@@ -38,7 +38,6 @@ class FilterService {
 
     public function getFilterHTML($filter){
         $filter=explode(',',$this->getFilter($filter));
-
         $groups = $this->groups;
         $attrs = $this->attrs;
         return view($this->tpl, compact("groups", "attrs","filter"));

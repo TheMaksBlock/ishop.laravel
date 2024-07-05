@@ -76,6 +76,8 @@
                                 <select name="related[]" class="form-control select2" id="related" multiple></select>
                             </div>
 
+                            {!! $filter_Menu !!}
+
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <div class="box box-danger box-solid file-upload">

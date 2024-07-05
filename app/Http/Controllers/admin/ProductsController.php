@@ -7,7 +7,9 @@ use App\Models\Product;
 use App\Models\RelatedProduct;
 use App\Services\admin\AliasService;
 use App\Services\admin\ImageService;
+use App\Services\admin\ProductService;
 use App\Services\CategoriesMenuService;
+use App\Services\FilterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
@@ -15,10 +17,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller {
     private $imageService;
+    private $filterService;
+    private $productService;
     private $perpage = 10;
+    private $filter = "templates.admin_filter_tpl";
 
-    public function __construct(ImageService $imageService) {
+    public function __construct(ImageService $imageService, FilterService $filterService, ProductService $productService) {
         $this->imageService = $imageService;
+        $this->filterService = $filterService;
+        $this->productService = $productService;
     }
 
     public function index() {
@@ -39,7 +46,10 @@ class ProductsController extends Controller {
 
         $category_menu = $categoriesMenuService->get();
 
-        return view('admin.products.create', compact('category_menu'));
+        $this->filterService->tpl =$this->filter;
+        $filter_Menu = $this->filterService->getFilterHTML(null);
+
+        return view('admin.products.create', compact('category_menu', 'filter_Menu'));
     }
 
     public function store(Request $request) {
@@ -76,17 +86,10 @@ class ProductsController extends Controller {
         $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
 
         if($product->save()){
-            $relatedProductIds = $request->input('related');
-            if($relatedProductIds){
-                foreach ($relatedProductIds as $relatedProductId) {
-                    RelatedProduct::create([
-                        'product_id' => $product->id,
-                        'related_id' => $relatedProductId
-                    ]);
-                }
-            }
-
+            $this->productService->editRelated($request->input('related'),$product->id);
+            $this->productService->editAttrs($request->input('attrs'),$product->id);
             $this->imageService->insetrGalery($product->id);
+
             return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
         }
         return redirect()->back()->withErrors('Ошибка добавления товара')->withInput();
