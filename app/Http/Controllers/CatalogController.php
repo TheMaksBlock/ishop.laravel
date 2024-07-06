@@ -13,7 +13,6 @@ use App\Services\FilterService;
 use Illuminate\Http\Request;
 
 
-
 class CatalogController extends Controller {
     private $currencyService;
     private $categoriesMenuService;
@@ -60,15 +59,14 @@ class CatalogController extends Controller {
 
     public function show(Category $category, Request $request) {
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             $request->merge(['page' => 1]);
         }
 
-        if($category->exists){
+        if ($category->exists) {
             $breadCrumbs = $this->breadCrumbsService->getBreadCrumbs($category->id);
             $id = $category->id;
-        }
-        else{
+        } else {
             $breadCrumbs = null;
             $id = null;
         }
@@ -79,8 +77,8 @@ class CatalogController extends Controller {
         $searchQuery = $request->get('s');
 
         $query = $this->filterService->attributesFilter($filterQuery);
-        $query = $this->filterService->searchFilter( $searchQuery,$query);
-        $products = $this->categoryService->getProducts($id, $this->perPage,$query);
+        $query = $this->filterService->searchFilter($searchQuery, $query);
+        $products = $this->categoryService->getProducts($id, $this->perPage, $query);
 
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
@@ -88,8 +86,8 @@ class CatalogController extends Controller {
         $cartSum = $this->cartService->getCartSum();
         $partial = $request->ajax();
 
-        if($partial){
-            return view('catalog.partial', compact("products","currency", "partial"));
+        if ($partial) {
+            return view('catalog.partial', compact("products", "currency", "partial"));
         }
 
         return view('catalog.show', compact("products", "breadCrumbs", "currencyWidget", "currency",

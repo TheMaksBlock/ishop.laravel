@@ -2,31 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Services\CartService;
 use App\Services\CategoriesMenuService;
 use App\Services\CurrencyService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller {
     private $currencyService;
     private $categoriesMenuService;
     private $cartService;
 
-    public function __construct(CurrencyService $currencyService,
+    public function __construct(CurrencyService       $currencyService,
                                 CategoriesMenuService $categoryMenu,
-                                CartService $cartService) {
+                                CartService           $cartService) {
         $this->currencyService = $currencyService;
         $this->categoriesMenuService = $categoryMenu;
         $this->cartService = $cartService;
     }
 
-    public function index(){
+    public function index() {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();

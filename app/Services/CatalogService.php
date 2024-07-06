@@ -20,15 +20,15 @@ class CatalogService {
         return $ids;
     }
 
-    public function getProducts($id,$perPage,$query=null) {
+    public function getProducts($id, $perPage, $query = null) {
         $childIds = $this->getIds($id);
         $childIds = $childIds ? $childIds . $id : $id;
 
-        if(!$query){
+        if (!$query) {
             return Product::whereIn('category_id', explode(',', $childIds))->paginate($perPage);
         }
 
-        if($id){
+        if ($id) {
             $query = $query->whereIn('category_id', explode(',', $childIds));
         }
 

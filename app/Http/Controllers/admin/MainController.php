@@ -3,18 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use App\Services\BreadCrumbsService;
-use App\Services\CartService;
-use App\Services\CategoriesMenuService;
-use App\Services\CurrencyService;
-use App\Services\RecentlyViewedService;
-use Illuminate\Http\Request;
-use RedBeanPHP\R;
+
 
 class MainController extends Controller {
     public function __construct() {

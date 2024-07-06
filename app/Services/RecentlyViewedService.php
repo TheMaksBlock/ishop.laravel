@@ -7,25 +7,22 @@ use Illuminate\Support\Facades\Cache;
 
 class RecentlyViewedService {
 
-    public function setRecentlyViewed($id)
-    {
+    public function setRecentlyViewed($id) {
         $recentlyViewed = Cache::get('recentlyViewed');
-        if(!$recentlyViewed){
+        if (!$recentlyViewed) {
             Cache::put('recentlyViewed', $id, 60 * 24);
-        }
-        else{
+        } else {
             $recentlyViewed = explode(',', $recentlyViewed);
-            if(!in_array($id, $recentlyViewed)){
+            if (!in_array($id, $recentlyViewed)) {
                 $recentlyViewed[] = $id;
                 Cache::put('recentlyViewed', implode(',', $recentlyViewed), 60 * 24);
             }
         }
     }
 
-    public function getRecentlyViewed($id)
-    {
+    public function getRecentlyViewed($id) {
         $recentlyViewed = Cache::get('recentlyViewed');
-        if(!empty($recentlyViewed)){
+        if (!empty($recentlyViewed)) {
             $recentlyViewed = explode(',', $recentlyViewed);
 
             $key = array_search($id, $recentlyViewed);
@@ -39,10 +36,10 @@ class RecentlyViewedService {
         }
     }
 
-    public function getRecentlyViewedProducts($id){
+    public function getRecentlyViewedProducts($id) {
         $ids = $this->getRecentlyViewed($id);
-        if($ids){
-            return Product::whereIn("id",$ids)->get();
+        if ($ids) {
+            return Product::whereIn("id", $ids)->get();
         }
     }
 }

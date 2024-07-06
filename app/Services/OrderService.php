@@ -2,19 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\Currency;
 use App\Models\Order;
 use App\Models\OrderProduct;
-use App\Models\Product;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 
 class OrderService {
-    public function saveOrder($note, $currency)
-    {
+    public function saveOrder($note, $currency) {
         $products = CartService::getCartProducts();
-        if(!$products){
+        if (!$products) {
             return null;
         }
 
@@ -24,13 +19,12 @@ class OrderService {
         $order->currency = $currency['code'];
         $order->save();
 
-        $this->saveOrderProduct($order->id,$products);
+        $this->saveOrderProduct($order->id, $products);
         CartService::clear();
         return $order->id;
     }
 
-    public function saveOrderProduct($order_id, $products)
-    {
+    public function saveOrderProduct($order_id, $products) {
         foreach ($products as $product_id => $product) {
             $order_product = new OrderProduct();
             $order_product->order_id = $order_id;

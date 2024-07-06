@@ -36,8 +36,7 @@ class BreadCrumbsService {
     }
 
     public static function getCats() {
-        // Получаем категории из кэша, если они там есть, иначе выполняем запрос к базе данных
-        Cache::remember('categories', 60*24, function () {
+        Cache::remember('categories', 60 * 24, function () {
             return Category::all();
         });
     }

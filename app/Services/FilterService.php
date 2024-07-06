@@ -21,7 +21,7 @@ class FilterService {
 
     private function getFilterGroups(): void {
         $this->groups = Cache::get('filter_groups');
-        if(!$this->groups){
+        if (!$this->groups) {
             $this->groups = $this->getGroups();
             Cache::put('filter_groups', $this->groups, now()->addHours(24));
         }
@@ -29,24 +29,23 @@ class FilterService {
 
     private function getFilterAttributes(): void {
         $this->attrs = Cache::get('filter_attrs');
-        if(!$this->attrs)
-        {
+        if (!$this->attrs) {
             $this->attrs = $this->getAttrs();
             Cache::put('filter_attrs', $this->attrs, now()->addHours(24));
         }
     }
 
-    public function getFilterHTML($filter){
-        if(!is_array($filter)){
-            $filter=explode(',',$this->getFilter($filter));
+    public function getFilterHTML($filter) {
+        if (!is_array($filter)) {
+            $filter = explode(',', $this->getFilter($filter));
         }
 
         $groups = $this->groups;
         $attrs = $this->attrs;
-        return view($this->tpl, compact("groups", "attrs","filter"));
+        return view($this->tpl, compact("groups", "attrs", "filter"));
     }
 
-    protected function getGroups(){
+    protected function getGroups() {
         return DB::table("attribute_group")->select('id', 'title')->get()->keyBy('id')->toArray();
     }
 
@@ -59,12 +58,12 @@ class FilterService {
         return $attrs;
     }
 
-    public function attributesFilter($filterIds,$query=null){
-        if(empty($filterIds)){
+    public function attributesFilter($filterIds, $query = null) {
+        if (empty($filterIds)) {
             return null;
         }
 
-        if($query == null){
+        if ($query == null) {
             $query = Product::query();
         }
 
@@ -83,29 +82,30 @@ class FilterService {
         });
     }
 
-    public function searchFilter($filter, $query=null){
-        if($query == null){
+    public function searchFilter($filter, $query = null) {
+        if ($query == null) {
             $query = Product::query();
         }
 
-        return $query->where('title','LIKE', "%{$filter}%");
+        return $query->where('title', 'LIKE', "%{$filter}%");
     }
+
     public function getFilter($filterIds): ?string {
         $filter = null;
-        if(!empty($filterIds)){
+        if (!empty($filterIds)) {
             $filter = preg_replace("#[^\d,]+#", '', $filterIds);
             $filter = rtrim($filter, ',');
         }
         return $filter;
     }
 
-    public function getCountGroups($filter){
+    public function getCountGroups($filter) {
         $filters = explode(',', $filter);
         $data = [];
 
-        foreach ($this->attrs as $key => $value){
-            foreach ($value as $k => $v){
-                if(in_array($k, $filters) && !in_array($key,$data)){
+        foreach ($this->attrs as $key => $value) {
+            foreach ($value as $k => $v) {
+                if (in_array($k, $filters) && !in_array($key, $data)) {
                     $data[] = $key;
                     break;
                 }

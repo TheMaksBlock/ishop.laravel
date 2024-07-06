@@ -4,7 +4,6 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\admin\UserService;
 use App\Services\admin\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller {
     private $orderService;
     private $perpage = 10;
+
     public function __construct(OrderService $orderService) {
         $this->orderService = $orderService;
     }
@@ -23,12 +23,12 @@ class UserController extends Controller {
         return view('admin.user.index', compact('users'));
     }
 
-    public function edit(User $user){
+    public function edit(User $user) {
         $orders = $this->orderService->getUserOrders($user);
         return view('admin.user.edit', compact('user', 'orders'));
     }
 
-    public function update(Request $request, User $user){
+    public function update(Request $request, User $user) {
         $validator = Validator::make($request->all(), [
             'login' => 'required|string|max:255|unique:users,login,' . $user->id,
             'password' => 'nullable|string|min:6',

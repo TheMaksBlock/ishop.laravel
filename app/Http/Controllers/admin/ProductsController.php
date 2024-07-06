@@ -47,7 +47,7 @@ class ProductsController extends Controller {
 
         $category_menu = $categoriesMenuService->get();
 
-        $this->filterService->tpl =$this->filter;
+        $this->filterService->tpl = $this->filter;
         $filter_Menu = $this->filterService->getFilterHTML(null);
 
         return view('admin.products.create', compact('category_menu', 'filter_Menu'));
@@ -80,15 +80,15 @@ class ProductsController extends Controller {
         $product->keywords = $request->input('keywords');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
-        $product->old_price = $request->input('old_price')??0;
+        $product->old_price = $request->input('old_price') ?? 0;
         $product->content = $request->input('content');
-        $product->status = $request->has('status')?'1':'0';
-        $product->hit = $request->has('hit')?'1':'0';
+        $product->status = $request->has('status') ? '1' : '0';
+        $product->hit = $request->has('hit') ? '1' : '0';
         $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
 
-        if($product->save()){
-            $this->productService->editRelated($request->input('related'),$product->id);
-            $this->productService->editAttrs($request->input('attrs'),$product->id);
+        if ($product->save()) {
+            $this->productService->editRelated($request->input('related'), $product->id);
+            $this->productService->editAttrs($request->input('attrs'), $product->id);
             $this->imageService->insetrGalery($product->id);
 
             return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
@@ -106,15 +106,15 @@ class ProductsController extends Controller {
                 "attrs" => ["name" => "category_id"]], ['parent_id' => $product->category_id]);
         $category_menu = $categoriesMenuService->get();
         $related_products = $product->related()->get();
-        $this->filterService->tpl =$this->filter;
+        $this->filterService->tpl = $this->filter;
         $attributes = AttributeProduct::where('product_id', $product->id)->pluck('attr_id')->toArray();
         $filter_Menu = $this->filterService->getFilterHTML($attributes);
         $gallery = $product->gallery()->get();
 
-        return view('admin.products.edit', compact('product', 'category_menu', 'related_products', 'filter_Menu','gallery'));
+        return view('admin.products.edit', compact('product', 'category_menu', 'related_products', 'filter_Menu', 'gallery'));
     }
 
-    public function update(Request $request, Product $product){
+    public function update(Request $request, Product $product) {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:category,id',
@@ -135,7 +135,7 @@ class ProductsController extends Controller {
                 ->withInput();
         }
 
-        if($request->input('title') != $product->title) {
+        if ($request->input('title') != $product->title) {
             $product->alias = AliasService::createAlias('product', 'alias', $request->get('title'));
         }
 
@@ -144,14 +144,14 @@ class ProductsController extends Controller {
         $product->keywords = $request->input('keywords');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
-        $product->old_price = $request->input('old_price')??0;
+        $product->old_price = $request->input('old_price') ?? 0;
         $product->content = $request->input('content');
-        $product->status = $request->has('status')?'1':'0';
-        $product->hit = $request->has('hit')?'1':'0';
+        $product->status = $request->has('status') ? '1' : '0';
+        $product->hit = $request->has('hit') ? '1' : '0';
 
-        if($product->save()){
-            $this->productService->editRelated($request->input('related'),$product->id);
-            $this->productService->editAttrs($request->input('attrs'),$product->id);
+        if ($product->save()) {
+            $this->productService->editRelated($request->input('related'), $product->id);
+            $this->productService->editAttrs($request->input('attrs'), $product->id);
             $this->imageService->insetrGalery($product->id);
 
             return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
@@ -160,22 +160,22 @@ class ProductsController extends Controller {
         return redirect()->back()->withErrors('Ошибка добавления товара')->withInput();
     }
 
-    public function addImage(Request $request){
-        if($name = $request->get('name')){
-            if($name){
+    public function addImage(Request $request) {
+        if ($name = $request->get('name')) {
+            if ($name) {
                 $params = Config::get('params.single');
-            }else{
+            } else {
                 $params = Config::get('params.multi');
             }
             $wmax = $params['width'];
             $hmax = $params['height'];
 
-            return  $this->imageService->uploadImg($name, $wmax, $hmax,$request->file($name));
+            return $this->imageService->uploadImg($name, $wmax, $hmax, $request->file($name));
         }
         return Response::json(['error' => 'Ошибка загрузки файла!'], 400);
     }
 
-    public function relatedProduct(Request $request){
+    public function relatedProduct(Request $request) {
         $q = $request->get('q') ?? '';
         $data['items'] = [];
 
@@ -183,9 +183,9 @@ class ProductsController extends Controller {
             ->where('title', 'LIKE', "%$q%")
             ->limit(10)->get();
 
-        if($products){
+        if ($products) {
             $i = 0;
-            foreach($products as $product){
+            foreach ($products as $product) {
                 $data['items'][$i]['id'] = $product->id;
                 $data['items'][$i]['text'] = $product->title;
                 $i++;
@@ -194,11 +194,11 @@ class ProductsController extends Controller {
         return Response::json($data);
     }
 
-    public function delete(Product $product){
-        if($product->delete()){
+    public function delete(Product $product) {
+        if ($product->delete()) {
             return redirect()->back()->with('success', 'Товар успешно удалён');
-        }else{
-            return redirect()->back()->withErrors('Ошибка удаления товара');
         }
+
+        return redirect()->back()->withErrors('Ошибка удаления товара');
     }
 }

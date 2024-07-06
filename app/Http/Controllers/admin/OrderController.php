@@ -5,7 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Services\admin\OrderService;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\error;
 
 
 class OrderController extends Controller {
@@ -23,7 +22,7 @@ class OrderController extends Controller {
 
     public function show($id) {
         $order = $this->orderService->getOrder($id);
-        if(!$order) {
+        if (!$order) {
             abort(404);
         }
         $products = $order->orderProducts()->get();
@@ -40,8 +39,8 @@ class OrderController extends Controller {
         return redirect()->route("admin.order.index")->withErrors(["error" => "Ошибка удаления"]);
     }
 
-    public function change(Request $request){
-        $success = $this->orderService->change($request->get('id'),$request->get('status'));
+    public function change(Request $request) {
+        $success = $this->orderService->change($request->get('id'), $request->get('status'));
 
         if ($success) {
             return redirect()->route("admin.order.index")->with("success", "Изменения сохранены");

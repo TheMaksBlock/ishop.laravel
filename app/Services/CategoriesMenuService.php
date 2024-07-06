@@ -21,7 +21,7 @@ class CategoriesMenuService {
     protected $params = [];
 
     public function __construct($options = [], $params = []) {
-        $this->prepend = "<li> <a href=\"". route('catalog.index') . "\">Все товары</a>      </li>";
+        $this->prepend = "<li> <a href=\"" . route('catalog.index') . "\">Все товары</a>      </li>";
         $this->getOptions($options);
         $this->params = $params;
         $this->run();
@@ -58,10 +58,10 @@ class CategoriesMenuService {
             }
         }
 
-        return "<{$this->container} class='{$this->class}' $attrs>\n".
-                $this->prepend."\n".
-                $this->menuHtml."\n".
-                "</{$this->container}>";
+        return "<{$this->container} class='{$this->class}' $attrs>\n" .
+            $this->prepend . "\n" .
+            $this->menuHtml . "\n" .
+            "</{$this->container}>";
     }
 
     protected function getTree() {
@@ -80,13 +80,13 @@ class CategoriesMenuService {
     protected function getMenuHtml($tree) {
         $str = '';
         foreach ($tree as $id => $category) {
-            $str .= $this->catToTemplate($category,$id);
+            $str .= $this->catToTemplate($category, $id);
         }
 
         return $str;
     }
 
-    protected function catToTemplate($category,$id) {
-        return view($this->tpl, $this->params+compact('category', 'id'))->render();
+    protected function catToTemplate($category, $id) {
+        return view($this->tpl, $this->params + compact('category', 'id'))->render();
     }
 }
