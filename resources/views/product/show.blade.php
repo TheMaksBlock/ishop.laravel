@@ -43,20 +43,6 @@
                         <div class="col-md-7 single-top-right">
                             <div class="single-para simpleCart_shelfItem">
                                 <h2>{{$product->title}}</h2>
-                                <div class="star-on">
-                                    <ul class="star-footer">
-                                        <li><a href="/#"><i> </i></a></li>
-                                        <li><a href="/#"><i> </i></a></li>
-                                        <li><a href="/#"><i> </i></a></li>
-                                        <li><a href="/#"><i> </i></a></li>
-                                        <li><a href="/#"><i> </i></a></li>
-                                    </ul>
-                                    <div class="review">
-                                        <a href="/#"> 1 customer review </a>
-
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
 
                                 <h5 class="item_price" id="base-price"
                                     data-base="{{$product->old_price * $currency['value']}}">
@@ -68,130 +54,19 @@
                                     @endif
                                     {{$currency['symbol_left'].$product->price * $currency['value'].$currency['symbol_right']}}
                                 </h5>
-                                <p>{{$product->Content}} </p>
-                                {{--@if($mods)
-                                <div class="available">
-                                    <ul>
-                                        <li>Color
-                                            <select>
-                                                <option>Выбрать цвет</option>
-                                                    <?php
-                                                foreach ($mods as $mod): ?>
-                                                <option data-title="<?= $mod->title ?>"
-                                                        data-price="<?= $mod->price * $currency['value'] ?>"
-                                                        value="<?= $mod->id ?>"><?= $mod->title ?></option>
-                                                <?php
-                                                endforeach; ?>
-                                            </select></li>
-                                        <div class="clearfix"></div>
-                                    </ul>
-                                </div>
-                                @endif--}}
                                 <div class="quantity">
                                     <input type="number" size="4" value="1" name="quantity" min="1" step="1"
                                            class="input-lg">
                                 </div>
                                 <a id="productAdd" data-id="<?= $product->id ?>" href="/cart/add?id=<?= $product->id ?>"
-                                   class="add-cart item_add add-to-cart-link">ADD TO CART</a>
+                                   class="add-cart item_add add-to-cart-link">Добавить в корзину</a>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="tabs">
-                        <ul class="menu_drop">
-                            <li class="item1"><a href="/#"><img src="/images/arrow.png" alt="">Description</a>
-                                <ul>
-                                    <li class="subitem1"><a href="/#">Lorem ipsum dolor sit amet, consectetuer
-                                            adipiscing
-                                            elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                                            aliquam
-                                            erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                                            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a>
-                                    </li>
-                                    <li class="subitem2"><a href="/#"> Duis autem vel eum iriure dolor in hendrerit in
-                                            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                                            facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
-                                            praesent
-                                            luptatum zzril delenit augue duis dolore</a></li>
-                                    <li class="subitem3"><a href="/#">Mirum est notare quam littera gothica, quam nunc
-                                            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
-                                            quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur
-                                            parum
-                                            clari, fiant sollemnes </a></li>
-                                </ul>
-                            </li>
-                            <li class="item2"><a href="/#"><img src="/images/arrow.png" alt="">Additional
-                                    information</a>
-                                <ul>
-                                    <li class="subitem2"><a href="/#"> Duis autem vel eum iriure dolor in hendrerit in
-                                            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                                            facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
-                                            praesent
-                                            luptatum zzril delenit augue duis dolore</a></li>
-                                    <li class="subitem3"><a href="/#">Mirum est notare quam littera gothica, quam nunc
-                                            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
-                                            quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur
-                                            parum
-                                            clari, fiant sollemnes </a></li>
-                                </ul>
-                            </li>
-                            <li class="item3"><a href="/#"><img src="/images/arrow.png" alt="">Reviews (10)</a>
-                                <ul>
-                                    <li class="subitem1"><a href="/#">Lorem ipsum dolor sit amet, consectetuer
-                                            adipiscing
-                                            elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                                            aliquam
-                                            erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                                            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a>
-                                    </li>
-                                    <li class="subitem2"><a href="/#"> Duis autem vel eum iriure dolor in hendrerit in
-                                            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                                            facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
-                                            praesent
-                                            luptatum zzril delenit augue duis dolore</a></li>
-                                    <li class="subitem3"><a href="/#">Mirum est notare quam littera gothica, quam nunc
-                                            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
-                                            quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur
-                                            parum
-                                            clari, fiant sollemnes </a></li>
-                                </ul>
-                            </li>
-                            <li class="item4"><a href="/#"><img src="/images/arrow.png" alt="">Helpful Links</a>
-                                <ul>
-                                    <li class="subitem2"><a href="/#"> Duis autem vel eum iriure dolor in hendrerit in
-                                            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                                            facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
-                                            praesent
-                                            luptatum zzril delenit augue duis dolore</a></li>
-                                    <li class="subitem3"><a href="/#">Mirum est notare quam littera gothica, quam nunc
-                                            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
-                                            quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur
-                                            parum
-                                            clari, fiant sollemnes </a></li>
-                                </ul>
-                            </li>
-                            <li class="item5"><a href="/#"><img src="/images/arrow.png" alt="">Make A Gift</a>
-                                <ul>
-                                    <li class="subitem1"><a href="/#">Lorem ipsum dolor sit amet, consectetuer
-                                            adipiscing
-                                            elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                                            aliquam
-                                            erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                                            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a>
-                                    </li>
-                                    <li class="subitem2"><a href="/#"> Duis autem vel eum iriure dolor in hendrerit in
-                                            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                                            facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
-                                            praesent
-                                            luptatum zzril delenit augue duis dolore</a></li>
-                                    <li class="subitem3"><a href="/#">Mirum est notare quam littera gothica, quam nunc
-                                            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
-                                            quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur
-                                            parum
-                                            clari, fiant sollemnes </a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <h3><b>Описание</b></h3>
+                        {!! $product->content !!}
                     </div>
                     <div class="latestproducts">
                         @if (!$related->isEmpty())
@@ -206,7 +81,6 @@
                                             </a>
                                             <div class="product-bottom">
                                                 <h3>{{ $rel->title }}</h3>
-                                                <p>Explore Now</p>
 
                                                 <h4>
                                                     <a data-id="{{ $rel->id }}" class="add-to-cart-link"
@@ -246,7 +120,6 @@
                                             </a>
                                             <div class="product-bottom">
                                                 <h3>{{ $product->title }}</h3>
-                                                <p>Explore Now</p>
 
                                                 <h4>
                                                     <a data-id="{{ $product->id }}" class="add-to-cart-link"

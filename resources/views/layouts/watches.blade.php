@@ -54,7 +54,7 @@
                                 <span
                                     class="simpleCart_total ">{{$currency['symbol_left'].$cartSum .$currency['symbol_right']}}</span>
                             @else
-                                <span class="simpleCart_total ">Empty Cart</span>
+                                <span class="simpleCart_total ">Корзина пуста</span>
                             @endif
                         </div>
                     </a>

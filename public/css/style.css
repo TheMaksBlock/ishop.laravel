@@ -1737,7 +1737,7 @@ ul {
 	line-height: 1.8em;
 	display: block;
 	position: relative;
-	font-size:13px;
+	font-size:20px;
 	color: #878d95;
 }
 .menu_drop ul li a:hover{
@@ -3233,6 +3233,33 @@ form .has-error .form-control{
 
 .product-main .img-responsive{
     height: 180px;
+}
+
+.tabs p{
+    font-size: 20px;
+    font-family: "Lato-Regular";
+}
+
+.tabs h3{
+    font-family: 'BreeSerif-Regular';
+}
+
+.dropdown-menu li{
+    padding: 8px;
+    border-bottom: 1px solid #73B6E1;
+    background-color: #000000;
+}
+.dropdown-menu{
+    border: none;
+    bottom: 0px;
+    top: 0px;
+    margin-top: 30px;
+}
+
+.dropdown-menu li a{
+    color: #fff;
+    font-family: 'Lato-Regular';
+    font-weight: 400;
 }
 
 

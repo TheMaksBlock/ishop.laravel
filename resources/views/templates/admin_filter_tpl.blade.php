@@ -1,11 +1,9 @@
 <div class="nav-tabs-custom" id="filter">
     <ul class="nav nav-tabs">
-        @php $i = 1; @endphp
         @foreach($groups as $group_id => $group_item)
-            <li @if($i == 1) class="active" @endif>
+            <li @if($loop->first) class="active" @endif>
                 <a href="#tab_{{ $group_id }}" data-toggle="tab" aria-expanded="true">{{ $group_item->title }}</a>
             </li>
-            @php $i++; @endphp
         @endforeach
     </ul>
     <div class="tab-content">

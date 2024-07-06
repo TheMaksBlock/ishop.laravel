@@ -37,7 +37,6 @@
                             </a>
                             <div class="product-bottom">
                                 <h3>{{ $hit->title }}</h3>
-                                <p>Explore Now</p>
 
                                 <h4>
                                     <a data-id="{{ $hit->id }}" class="add-to-cart-link" href="/cart/add?id={{ $hit->id }}">

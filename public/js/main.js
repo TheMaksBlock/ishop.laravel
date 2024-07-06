@@ -82,7 +82,7 @@ function showCart(cart){
     if($('.cart-sum').text()){
         $('.simpleCart_total').html($('#cart .cart-sum').text());
     }else {
-        $('.simpleCart_total').text("Empty Cart")
+        $('.simpleCart_total').text("Корзина пуста")
     }
 }
 
