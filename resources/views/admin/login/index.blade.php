@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/adminlte/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 2 | Log in</title>
@@ -69,11 +68,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
-<script src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- iCheck -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ asset('adminlte/plugins/iCheck/icheck.min.js')}}"></script>
 >
 <script>
     $(function () {

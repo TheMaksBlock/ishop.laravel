@@ -54,11 +54,13 @@
                                     @endif
                                     {{$currency['symbol_left'].$product->price * $currency['value'].$currency['symbol_right']}}
                                 </h5>
+                                <br><br><br>
                                 <div class="quantity">
                                     <input type="number" size="4" value="1" name="quantity" min="1" step="1"
                                            class="input-lg">
                                 </div>
-                                <a id="productAdd" data-id="<?= $product->id ?>" href="/cart/add?id=<?= $product->id ?>"
+                                <br>
+                                <a id="productAdd" data-id="{{$product->id}}" href="{{route("cart.add",["id" =>$product->id])}}"
                                    class="add-cart item_add add-to-cart-link">Добавить в корзину</a>
                             </div>
                         </div>
@@ -75,7 +77,7 @@
                                 @foreach ($related as $rel)
                                     <div class="col-md-3 product-left">
                                         <div class="product-main simpleCart_shelfItem">
-                                            <a href="/product/{{ $rel->alias }}" class="mask">
+                                            <a href="{{ route("product.show",[$rel->alias])}}" class="mask">
                                                 <img class="img-responsive zoom-img" src="/images/{{ $rel->img }}"
                                                      alt=""/>
                                             </a>
@@ -84,7 +86,7 @@
 
                                                 <h4>
                                                     <a data-id="{{ $rel->id }}" class="add-to-cart-link"
-                                                       href="/cart/add?id={{ $rel->id }}">
+                                                       href="{{route("cart.add",["id" =>$rel->id ])}}">
                                                         <i></i>
                                                     </a>
                                                     <span class="item_price">{{ $currency['symbol_left'].$rel->price*$currency['value'].$currency['symbol_right'] }}</span>
@@ -114,7 +116,7 @@
                                 @foreach ($recentlyViewed as $product)
                                     <div class="col-md-3 product-left">
                                         <div class="product-main simpleCart_shelfItem">
-                                            <a href="/product/{{ $product->alias }}" class="mask">
+                                            <a href="{{ route("product.show",[$product->alias]) }}" class="mask">
                                                 <img class="img-responsive zoom-img" src="/images/{{ $product->img }}"
                                                      alt=""/>
                                             </a>
@@ -123,7 +125,7 @@
 
                                                 <h4>
                                                     <a data-id="{{ $product->id }}" class="add-to-cart-link"
-                                                       href="/cart/add?id={{ $product->id }}">
+                                                       href="{{route("cart.add",["id" =>$product->id])}}">
                                                         <i></i>
                                                     </a>
                                                     <span class="item_price">{{$currency['symbol_left'].$product->price *$currency['value'].$currency['symbol_right'] }}</span>

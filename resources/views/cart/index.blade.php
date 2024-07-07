@@ -44,8 +44,8 @@
                             @foreach ($cart as $id => $item)
                                 @if(isset($item['alias']))
                                     <tr>
-                                        <td><a href="{{ url('product/' . $item['alias']) }}"><img src="{{ asset('images/' . $item['img']) }}" alt=""></a></td>
-                                        <td><a href="{{ url('product/' . $item['alias']) }}">{{ $item['title'] }}</a></td>
+                                        <td><a href="{{ route('product.show', [$item['alias']]) }}"><img src="{{ asset('images/' . $item['img']) }}" alt=""></a></td>
+                                        <td><a href="{{ route('product.show', [$item['alias']]) }}">{{ $item['title'] }}</a></td>
                                         <td>{{ $item['qty'] }}</td>
                                         <td>{{ $item['price'] }}</td>
 

@@ -19,12 +19,12 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>{{ $countOrders}}</h3>
-                        <p>New Orders</p>
+                        <p>Новых заказов</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="{{route("admin.order.index")}}" class="small-box-footer">All orders <i
+                    <a href="{{route("admin.order.index")}}" class="small-box-footer">Все заказы <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -35,12 +35,12 @@
                     <div class="inner">
                         <h3>{{$countProducts}}</h3>
 
-                        <p>Products</p>
+                        <p>Товары</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="" class="small-box-footer">All products <i
+                    <a href="{{route("admin.products.index")}}" class="small-box-footer">Все продукты <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -50,12 +50,12 @@
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>{{$countUsers}} </h3>
-                        <p>User Registrations</p>
+                        <p>Всего пользователей</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="" class="small-box-footer">Admin users<i
+                    <a href="{{route("admin.user.index")}}" class="small-box-footer">Управление пользователями <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -66,12 +66,12 @@
                     <div class="inner">
                         <h3>{{$countCategories}}</h3>
 
-                        <p>Categories</p>
+                        <p>Категории</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="" class="small-box-footer">All category's <i
+                    <a href="{{route("admin.category.index")}}" class="small-box-footer">Все категории <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>

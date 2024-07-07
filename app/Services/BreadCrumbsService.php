@@ -15,7 +15,7 @@ class BreadCrumbsService {
         $breadCrumbs = "<li><a href='" . route("main.index") . "'>Главная</a> </li>";
         if ($breadCrumbsArray) {
             foreach ($breadCrumbsArray as $alias => $title) {
-                $breadCrumbs .= "<li><a href='" . url('/category/' . $alias) . "'>$title</a> </li>";
+                $breadCrumbs .= "<li><a href='" . route("catalog.show", [$alias]) . "'>$title</a> </li>";
             }
         }
         if ($name) {

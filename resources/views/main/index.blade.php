@@ -32,14 +32,15 @@
                 @foreach ($hits as $hit)
                     <div class="col-md-3 product-left">
                         <div class="product-main simpleCart_shelfItem">
-                            <a href="/product/{{ $hit->alias }}" class="mask">
+                            <a href="{{route('product.show', [$hit->alias])}}" class="mask">
                                 <img class="img-responsive zoom-img" src="/images/{{ $hit->img }}" alt=""/>
                             </a>
                             <div class="product-bottom">
                                 <h3>{{ $hit->title }}</h3>
 
                                 <h4>
-                                    <a data-id="{{ $hit->id }}" class="add-to-cart-link" href="/cart/add?id={{ $hit->id }}">
+                                    <a data-id="{{ $hit->id }}" class="add-to-cart-link" href="{{route("cart.add",["id"
+                                    =>$hit->id])}}">
                                         <i></i>
                                     </a>
                                     <span class="item_price">{{$currency['symbol_left'].$hit->price *$currency['value'].$currency['symbol_right']}}</span>

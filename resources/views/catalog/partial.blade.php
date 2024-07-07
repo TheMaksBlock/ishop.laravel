@@ -8,7 +8,7 @@
                         @foreach ($products as $product)
                             <div class="col-md-4 product-left p-left">
                                 <div class="product-main simpleCart_shelfItem">
-                                    <a href="/product/{{ $product->alias }}" class="mask">
+                                    <a href="{{ route('product.show', [$product->alias]) }}" class="mask">
                                         <img class="img-responsive zoom-img" src="/images/{{ $product->img }}"
                                              alt=""/>
                                     </a>
@@ -17,7 +17,7 @@
 
                                         <h4>
                                             <a data-id="{{ $product->id }}" class="add-to-cart-link"
-                                               href="/cart/add?id={{ $product->id }}">
+                                               href="{{ route('cart.add', ["id"=>$product->id]) }}">
                                                 <i></i>
                                             </a>
                                             <span
