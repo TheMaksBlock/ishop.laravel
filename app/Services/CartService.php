@@ -14,7 +14,7 @@ class CartService {
                 return false;
             }
 
-            $title = "{$product->title}";
+            $title = $product->title;
             $price = $product->price;
 
             $cart = self::getCart();
@@ -86,6 +86,28 @@ class CartService {
             }
         }
         return $products;
+    }
+
+    public static function recalc(){
+        $cart = self::getCart();
+        if (!$cart) {
+            return false;
+        }
+
+        $currency = app(CurrencyService::class)->currency;
+
+        foreach ($cart as $k => $v) {
+            if ($k!== 'sum' && $k!== 'qty' && $k!== 'currency') {
+                $cart[$k]['price'] = $v['price']/$cart['currency']['value'] * $currency['value'];
+
+            }
+        }
+
+        $cart['sum']=$cart['sum']/$cart['currency']['value'] * $currency['value'];
+
+        $cart['currency'] = $currency;
+        Cache::put('cart', $cart, 60 * 24);
+        return true;
     }
 
 }

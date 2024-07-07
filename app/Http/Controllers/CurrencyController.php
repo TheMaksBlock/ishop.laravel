@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CartService;
 use App\Services\CurrencyService;
 use Illuminate\Support\Facades\Cache;
 
@@ -18,7 +19,7 @@ class CurrencyController extends Controller {
             $curr = $this->currencyService->getCurrencies();
             if (!empty($curr[$code])) {
                 Cache::put('Currency', $curr[$code], 60 * 24);
-                /*Cart::recalc($curr[$currency]);*/
+                CartService::recalc();
             }
         }
         return back();
