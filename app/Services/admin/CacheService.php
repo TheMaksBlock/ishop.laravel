@@ -11,7 +11,10 @@ class CacheService {
         "Категории" =>
             ["ishop_menu" => "Меню на главной странице",
                 "admin_cat" => "Меню категорий администратора",
-                "admin_select" => "Меню выбора родительской категории"]];
+                "admin_select" => "Меню выбора родительской категории"],
+        "Данные" =>
+            ["cats" => "Категории"
+        ]];
 
     private static $link = "admin.cache.forget";
     private static $groupLink = "admin.cache.forgetGroup";
