@@ -64,5 +64,8 @@ Route::post('/admin/product/addImage', 'App\Http\Controllers\admin\ProductsContr
 Route::get('/admin/product/related-product', 'App\Http\Controllers\admin\ProductsController@relatedProduct')->name('admin.product.relatedProduct')->middleware(authAdminMW::class);
 Route::put('/admin/product/{product}', 'App\Http\Controllers\admin\ProductsController@update')->name('admin.product.update')->middleware(authAdminMW::class);
 
+Route::get('/admin/currency', 'App\Http\Controllers\admin\CurrencyController@index')->name('admin.currency.index')->middleware(authAdminMW::class);
+Route::get('/admin/currency/{currency}/edit', 'App\Http\Controllers\admin\CurrencyController@edit')->name('admin.currency.edit')->middleware(authAdminMW::class);
+Route::put('/admin/currency/{currency}', 'App\Http\Controllers\admin\CurrencyController@update')->name('admin.currency.update')->middleware(authAdminMW::class);
 
 

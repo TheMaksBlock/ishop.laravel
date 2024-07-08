@@ -12,6 +12,7 @@ class CartController extends Controller {
     private $cartService;
     private $currencyService;
     private $categoriesMenuService;
+    private $orderService;
 
     public function __construct(CartService           $cartService,
                                 CurrencyService       $currencyService,
@@ -20,6 +21,7 @@ class CartController extends Controller {
         $this->cartService = $cartService;
         $this->currencyService = $currencyService;
         $this->categoriesMenuService = $categoryMenu;
+        $this->orderService = $orderService;
     }
 
     public function add(Request $request) {
@@ -41,10 +43,11 @@ class CartController extends Controller {
             $this->cartService->delete($id);
         }
 
-        $cart = CartService::getCart();
+        $cart = $this->cartService->getCart();
 
         if ($request->ajax()) {
-            return view('cart.index_modal', compact('cart'));
+            $currency = $this->currencyService->currency;
+            return view('cart.index_modal', compact('cart', 'currency'));
         }
 
         redirect();
@@ -54,7 +57,8 @@ class CartController extends Controller {
         $this->cartService->clear();
 
         $cart = $this->cartService->getCart();
-        return view('cart.index_modal', compact('cart'));
+        $currency = $this->currencyService->currency;
+        return view('cart.index_modal', compact('cart', 'currency'));
     }
 
     public function show(Request $request) {
@@ -73,4 +77,11 @@ class CartController extends Controller {
         $currency = $this->currencyService->currency;
         return view('cart.index', compact('cart', "menu", 'currencyWidget', "currency"));
     }
+
+    public function checkout(Request $request) {
+        $this->orderService->saveOrder($request->get("note"), $this->currencyService->currency);
+
+        return redirect()->route('cart.index')->with('success', 'Товары заказаны');
+    }
+
 }

@@ -1,4 +1,4 @@
-@if(!empty($cart) && count($cart)>3)
+@if(!$cart["items"]->isEmpty())
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>
@@ -11,15 +11,15 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($cart as $id => $item)
-            @if(isset($item['alias']))
+        @foreach ($cart["items"] as $item)
+            @if(isset($item->alias))
             <tr>
-                <td><a href="{{ route('product.show', [$item['alias']]) }}"><img src="{{ asset('images/' . $item['img']) }}" alt=""></a></td>
-                <td><a href="{{ route('product.show', [$item['alias']]) }}">{{ $item['title'] }}</a></td>
-                <td>{{ $item['qty'] }}</td>
-                <td>{{ $cart['currency']['symbol_left'].$item['price'].$cart['currency']['symbol_right'] }}</td>
+                <td><a href="{{ route('product.show', [$item->alias]) }}"><img src="{{ asset('images/' . $item->img) }}" alt=""></a></td>
+                <td><a href="{{ route('product.show', [$item->alias]) }}">{{ $item->title }}</a></td>
+                <td>{{ $item->quantity }}</td>
+                <td>{{ $currency['symbol_left'].$item->price.$currency['symbol_right'] }}</td>
 
-                <td><span data-id="{{$id}}" class="glyphicon glyphicon-remove text-danger del-item"></span> </td>
+                <td><span data-id="{{$item->id}}" class="glyphicon glyphicon-remove text-danger del-item"></span> </td>
             </tr>
             @endif
         @endforeach
@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td>На сумму:</td>
-            <td colspan="4" class="text-right cart-sum">{{$cart['currency']['symbol_left'].$cart['sum'].$cart['currency']['symbol_right'] }}</td>
+            <td colspan="4" class="text-right cart-sum">{{$currency['symbol_left'].$cart['sum'].$currency['symbol_right'] }}</td>
         </tr>
         </tbody>
     </table>

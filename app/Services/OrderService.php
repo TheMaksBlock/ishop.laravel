@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderService {
     public function saveOrder($note, $currency) {
-        $products = (new CartService())->getCart();
-        if (!$products) {
+        $cart = (new CartService())->getCart();
+        if ($cart["items"]->isEmpty()) {
             return null;
         }
 
@@ -19,19 +19,19 @@ class OrderService {
         $order->currency = $currency['code'];
         $order->save();
 
-        $this->saveOrderProduct($order->id, $products);
-        CartService::clear();
+        $this->saveOrderProduct($order->id, $cart["items"]);
+        (new CartService())->clear();
         return $order->id;
     }
 
     public function saveOrderProduct($order_id, $products) {
-        foreach ($products as $product_id => $product) {
+        foreach ($products as $product) {
             $order_product = new OrderProduct();
             $order_product->order_id = $order_id;
-            $order_product->product_id = (int)$product_id;
-            $order_product->qty = $product['qty'];
-            $order_product->title = $product['title'];
-            $order_product->price = $product['price'];
+            $order_product->product_id = (int)$product->id;
+            $order_product->qty = $product->quantity;
+            $order_product->title = $product->title;
+            $order_product->price = $product->price;
             $order_product->save();
         }
     }

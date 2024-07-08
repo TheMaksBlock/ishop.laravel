@@ -16,11 +16,11 @@ class CurrencyService {
     }
 
     protected function run() {
-        $this->currencies = Cache::remember('Currencies', 60 * 24, function () {
+        $this->currencies = Cache::remember('Currencies', 0, function () {
             return $this->getCurrencies();
         });
 
-        $this->currency = Cache::remember('Currency', 60 * 24, function () {
+        $this->currency = Cache::remember('Currency', 0, function () {
             return $this->getCurrency($this->currencies);
         });
     }

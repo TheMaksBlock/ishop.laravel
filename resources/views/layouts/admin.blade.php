@@ -84,7 +84,7 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href=""><i class="fa fa-cubes"></i> <span>Товары</span>
+                    <a href="{{route("admin.products.index")}}"><i class="fa fa-cubes"></i> <span>Товары</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -97,6 +97,14 @@
                 <li><a href="{{route('admin.cache.index')}}"><i class="fa fa-database"></i> <span>Кэширование</span></a></li>
                 <li><a href="{{route('admin.user.index')}}"><i class="fa fa-users"></i>
                         <span>Пользователи</span></a>
+
+                <li class="treeview"><a href="{{route("admin.currency.index")}}"><i class="fa fa-cubes"></i> <span>Валюты</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{route('admin.products.index')}}">Список валют</a></li>
+                        <li><a href="{{route('admin.product.create')}}">Добавить валюту</a></li>
+                    </ul>
             </ul>
         </section>
     </aside>

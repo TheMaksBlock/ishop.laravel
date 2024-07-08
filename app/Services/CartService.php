@@ -22,7 +22,7 @@ class CartService {
     }
 
     public function addBd($id, $qty, $user) {
-        if ($id && $qty > 0) {
+        if ($id>0 && $qty > 0) {
             $cartItem = CartItem::where('user_id', $user->id)
                 ->where('product_id', $id)
                 ->first();
@@ -33,7 +33,7 @@ class CartService {
                 $cartItem = new CartItem([
                     'user_id' => $user->id,
                     'product_id' => $id,
-                    'quantity' => $id,
+                    'quantity' => $qty,
                 ]);
             }
 
@@ -64,27 +64,40 @@ class CartService {
     }
 
     public function delete($id) {
-        $cart = self::getCart();
+        if(Auth::user()){
+            $this->deleteBd($id);
+        }else{
+            $this->deleteSession($id);
+        }
 
-        if (isset($cart[$id])) {
-            $qty = $cart[$id]['qty'];
-            $sum = $cart[$id]['price'] * $qty;
+    }
 
-            $cart['qty'] -= $qty;
-            $cart['sum'] -= $sum;
+    private function deleteBd($id){
+        $cartItem = CartItem::where('user_id', Auth::user()->id)
+            ->where('product_id', $id);
 
-            unset($cart[$id]);
-            Cache::put('cart', $cart, 60 * 24);
+        if ($cartItem) {
+            $cartItem->delete();
         }
     }
 
+    private function deleteSession($id,) {
+        $cart = Session::get('cart');
+        if ($cart && isset($cart[$id])) {
+            unset($cart[$id]);
+            Session::put('cart', $cart);
+        }
+    }
+
+
     public function getCart() {
         $user = Auth::user();
-
+        $currency = (new CurrencyService())->currency;
         if ($user) {
             $items = $user->cartItems()->withPivot("quantity")->get();
             foreach ($items as $item) {
                 $item->quantity = $item->pivot->quantity;
+                $item->price*=$currency["value"];
             }
         } else {
             $cart = Session::get('cart');
@@ -92,6 +105,7 @@ class CartService {
                 $items = Product::whereIn("id", array_keys($cart))->get();
                 foreach ($items as $item) {
                     $item->quantity = $cart[$item->id]["qty"];
+                    $item->price*=$currency["value"];
                 }
             } else {
                 $items = new Collection();
@@ -116,8 +130,7 @@ class CartService {
                 $item->delete();
             }
         } else {
-            $cart = $this->getCart();
-            unset($cart);
+            Session::forget("cart");
         }
     }
 
@@ -128,27 +141,6 @@ class CartService {
             $sum += $item->price * $item->quantity;
         }
         return $sum;
-    }
-
-    public static function recalc() {
-        $cart = self::getCart();
-        if (!$cart) {
-            return false;
-        }
-
-        $currency = app(CurrencyService::class)->currency;
-
-        foreach ($cart as $k => $v) {
-            if ($k !== 'sum' && $k !== 'qty' && $k !== 'currency') {
-                $cart[$k]['price'] = $v['price'] / $cart['currency']['value'] * $currency['value'];
-            }
-        }
-
-        $cart['sum'] = $cart['sum'] / $cart['currency']['value'] * $currency['value'];
-
-        $cart['currency'] = $currency;
-        Cache::put('cart', $cart, 60 * 24);
-        return true;
     }
 
     public function moveCart() {
