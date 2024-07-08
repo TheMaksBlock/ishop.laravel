@@ -34,7 +34,7 @@ class LoginController extends Controller {
         $credentials = $request->only('login', 'password');
 
         if (Auth::attempt($credentials)) {
-            event(new UserLogined(Auth::user()->id));
+            event(new UserLogined());
             return redirect()->route('main.index');
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\UserLogined;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class LoginController extends Controller {
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            event(new UserLogined());
 
             if ($user->role === 'admin') {
                 return redirect()->route('admin.index');

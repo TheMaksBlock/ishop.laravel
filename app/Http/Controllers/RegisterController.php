@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLogined;
 use App\Models\User;
 use App\Services\CartService;
 use App\Services\CategoriesMenuService;
@@ -54,8 +55,8 @@ class RegisterController extends Controller {
             'address' => $request->address,
         ]);
 
-        // Выполните дополнительную логику, например, авторизацию пользователя или перенаправление
         auth()->login($user);
+        event(new UserLogined());
 
         return redirect()->route('main.index');
     }
