@@ -167,7 +167,6 @@ $('body').on('change', '.w_sidebar input', function() {
     }
 
 
-    console.log(location.href+"");
     $.ajax({
         url: url,
         data: dataToSend,

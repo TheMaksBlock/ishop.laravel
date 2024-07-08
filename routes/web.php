@@ -72,7 +72,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/', 'App\Http\Controllers\admin\CacheController@index')->name('admin.cache.index');
             Route::get('/forget', 'App\Http\Controllers\admin\CacheController@forget')->name('admin.cache.forget');
             Route::get('/forgetGroup', 'App\Http\Controllers\admin\CacheController@forgetGroup')->name('admin.cache.forgetGroup');
-            Route::get('/forgetAll', 'App\Http\Controllers\admin\CacheController@forgetAll');
+            Route::get('/forgetAll', 'App\Http\Controllers\admin\CacheController@forgetAll')->name('admin.cache.forgetAll');
         });
 
         // Пользователи
@@ -90,6 +90,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/{product}/edit', 'App\Http\Controllers\admin\ProductsController@edit')->name('admin.product.edit');
             Route::get('/{product}/delete', 'App\Http\Controllers\admin\ProductsController@delete')->name('admin.product.delete');
             Route::post('/addImage', 'App\Http\Controllers\admin\ProductsController@addImage')->name('admin.product.addImage');
+            Route::get('/deleteImage', 'App\Http\Controllers\admin\ProductsController@deleteImage')->name('admin.product.deleteImage');
             Route::get('/related-product', 'App\Http\Controllers\admin\ProductsController@relatedProduct')->name('admin.product.relatedProduct');
             Route::put('/{product}', 'App\Http\Controllers\admin\ProductsController@update')->name('admin.product.update');
         });

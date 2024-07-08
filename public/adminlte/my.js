@@ -1,6 +1,6 @@
 $('#editor1').ckeditor();
 
-$('.delete').click(function () {
+$(document).on('click', '.delete', function(event) {
     const res = confirm('Подтвердите действие');
     if (!res) {
         return false;
@@ -10,7 +10,7 @@ $('.delete').click(function () {
 $('.sidebar-menu a').each(function () {
     const link = this.href;
 
-    console.log("link: " + link+"  "+"loc: " + location+"      "+(link == location));
+    console.log("link: " + link + "  " + "loc: " + location + "      " + (link == location));
 
     if (link == location) {
         $(this).parent().addClass('active');
@@ -47,7 +47,9 @@ if ($('div').is('#single')) {
                         alert(response.error);
                         return;
                     }
-                    $('.' + buttonSingle.data('name')).html('<img src="/images/' + response.file + '" style="max-height: 150px;">');
+                    $('.' + buttonSingle.data('name')).html('<span class="img"><img src="/images/' + response.file +
+                        '" style="max-height: 150px;">' +
+                        '<a class="delete close" href="/admin/product/deleteImage?t=single&name='+ response.file+'"><i class="fa fa-fw fa-close text-danger"></i></a></span>');
                 }, 1000);
             },
             onError: function () {
@@ -73,8 +75,10 @@ if ($('div').is('#single')) {
             onComplete: function (file, response) {
                 setTimeout(function () {
                     buttonMulti.closest('.file-upload').find('.overlay').css({'display': 'none'});
-                    response = JSON.parse(response.replace(/<.*?>/ig, ""));
-                    $('.' + buttonMulti.data('name')).append('<img src="/images/' + response.file + '" style="max-height: 150px;">');
+                    response = JSON.parse(response.replace(/<.*?>/ig, ""))
+                    $('.' + buttonMulti.data('name')).append('<span class="img"><img src="/images/' + response.file +
+                        '" style="max-height: 150px;">' +
+                        '<a class="delete close" href="/admin/product/deleteImage?t=multi&name='+ response.file+'"><i class="fa fa-fw fa-close text-danger"></i></a></span>');
                 }, 1000);
             }
         });
@@ -102,3 +106,35 @@ $(".select2").select2({
         }
     }
 });
+
+$(document).on('mouseenter', '.img', function() {
+    $(this).find('img').animate({opacity: 0.5}, 100);
+    $(this).find('.close').animate({opacity: 1}, 100);
+});
+
+$(document).on('mouseleave', '.img', function() {
+    $(this).find('img').animate({opacity: 1}, 100);
+    $(this).find('.close').animate({opacity: 0}, 100);}
+)
+
+$(document).on('click', '.img a', function(event) {
+    event.preventDefault();
+    const a = event.target.closest('.img').querySelector('a');
+    var el = event.target.closest('.img');
+    if (a) {
+        const href = a.getAttribute('href');
+        console.log(href);
+        $.ajax({
+            url: href,
+            type: 'GET',
+            success: function(){
+                console.log("Success!");
+                el.remove();
+            },
+            error: function(){
+                alert('Ошибка! Попробуйте позже');
+            }
+        });
+    }
+})
+

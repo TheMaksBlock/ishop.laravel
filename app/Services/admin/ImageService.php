@@ -120,6 +120,8 @@ class ImageService {
 
         session()->forget("multi");
         session()->forget("single");
+        session()->forget("single_r");
+        session()->forget("multi_r");
     }
 
     public function insetrGalery($productId){
@@ -135,15 +137,57 @@ class ImageService {
                 Gallery::insert($imageData);
             }
 
+            $images_r= session()->get("multi_r");
+            if($images_r){
+                Gallery::where("product_id",$productId)->whereIn("img",$images_r)->delete();
+            }
+
             $img = session()->get("single");
+
             if($img){
                 $product = Product::where("id","=",$productId)->first();
                 $product->img = $img;
                 $product->save();
             }
 
+            $img_r = session()->get("single_r");
+
+            if($img_r){
+                $product_r = Product::where("id","=",$productId)->first();
+                if($img_r == $product_r->img){
+                    $product_r->img = 'no_image.jpg';
+                    $product_r->save();
+                }
+            }
+
+
             session()->forget("multi");
             session()->forget("single");
+        }
+    }
+
+    public function delete($name, $type){
+        if($name && $type){
+            if($type == "single") {
+                $single = session()->get("single");
+
+                if($single == $name){
+                    session()->forget("single");
+                }else{
+                    session()->put("single_r", $name);
+                }
+
+            }else{
+                $multi = session()->get("multi");
+
+                if($multi && in_array($name, $multi)){
+                    $key = array_search($name, $multi);
+                    unset($multi[$key]);
+                    session()->put("multi", $multi);
+                }else{
+                    session()->push("multi_r", $name);
+                }
+            }
         }
     }
 }

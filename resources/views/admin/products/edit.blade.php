@@ -17,7 +17,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <form action="{{route("admin.product.update", [$product->id])}}" method="post" data-toggle="validator">
+                    <form action="{{route("admin.product.update", [$product->id])}}" method="post"
+                          data-toggle="validator">
                         @csrf
                         @method('PUT')
                         <div class="box-body">
@@ -71,7 +72,7 @@
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="status" {{$product->status ? ' checked' : null}}>
-                                    Статус
+                                    Показывать
                                 </label>
                             </div>
 
@@ -100,12 +101,19 @@
                                             <h3 class="box-title">Базовое изображение</h3>
                                         </div>
                                         <div class="box-body">
-                                            <div id="single" class="btn btn-success" data-url="{{route("admin.product.addImage")}}"
+                                            <div id="single" class="btn btn-success"
+                                                 data-url="{{route("admin.product.addImage")}}"
                                                  data-name="single">Выбрать файл
                                             </div>
                                             <p><small>Рекомендуемые размеры: 125х200</small></p>
                                             <div class="single">
-                                                <img src="/images/<?=$product->img?>" alt="" style="max-height: 150px;">
+                                                <span class="img">
+                                                    <img src="/images/{{$product->img}}" alt=""
+                                                         style="max-height: 150px;">
+                                                    <a class="delete close"
+                                                       href="{{ route('admin.product.deleteImage', ["t"=>"single", "name" =>$product->img]) }}"><i
+                                                            class="fa fa-fw fa-close text-danger"></i></a>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="overlay">
@@ -119,15 +127,25 @@
                                             <h3 class="box-title">Картинки галереи</h3>
                                         </div>
                                         <div class="box-body">
-                                            <div id="multi" class="btn btn-success" data-url="{{route("admin.product.addImage")}}"
+                                            <div id="multi" class="btn btn-success"
+                                                 data-url="{{route("admin.product.addImage")}}"
                                                  data-name="multi">Выбрать файл
                                             </div>
                                             <p><small>Рекомендуемые размеры: 700х1000</small></p>
                                             <div class="multi">
                                                 @if(!$gallery->isEmpty())
-                                                    @foreach($gallery as $item)
-                                                        <img src="{{asset("images/".$item->img)}}" alt="" style="max-height: 150px; cursor: pointer;" data-id="<?=$product->id;?>" data-src="<?=$item;?>" class="del-item">
-                                                    @endforeach
+                                                        @foreach($gallery as $item)
+                                                            <span class="img">
+                                                                <img src="{{asset("images/".$item->img)}}" alt=""
+                                                                     style="max-height: 150px; cursor: pointer;"
+                                                                     data-id="{{$product->id}}" data-src="{{$item}};"
+                                                                     class="del-item">
+
+                                                                <a class="delete close"
+                                                                   href="{{ route('admin.product.deleteImage', ["t"=>"multi", "name" =>$item->img]) }}"><i
+                                                                        class="fa fa-fw fa-close text-danger"></i></a>
+                                                            </span>
+                                                        @endforeach
                                                 @endif
                                             </div>
                                         </div>

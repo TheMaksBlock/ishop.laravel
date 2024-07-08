@@ -97,6 +97,8 @@ class ProductsController extends Controller {
     }
 
     public function edit(Product $product) {
+        $this->imageService->clear();
+
         $categoriesMenuService = new CategoriesMenuService(
             ['tpl' => 'admin.templates.adminSelectCategory_tpl',
                 'container' => 'select',
@@ -173,6 +175,11 @@ class ProductsController extends Controller {
             return $this->imageService->uploadImg($name, $wmax, $hmax, $request->file($name));
         }
         return Response::json(['error' => 'Ошибка загрузки файла!'], 400);
+    }
+
+    public function deleteImage(Request $request) {
+        $this->imageService->delete($request->get("name"), $request->get("t"));
+        return true;
     }
 
     public function relatedProduct(Request $request) {

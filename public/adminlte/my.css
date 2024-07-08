@@ -54,3 +54,15 @@
 .overlay{
     display: none;
 }
+
+.close {
+    position: absolute;
+    color: red;
+    opacity: 0;
+    transition: opacity 0.2s;
+    margin-left:-20px;
+}
+
+.img img{
+    position:relative;
+}
