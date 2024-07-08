@@ -42,8 +42,8 @@ class ProductController extends Controller {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        $cartSum = $this->cartService->getCartSum();
+        $cart = $this->cartService->getCart();
         return view('product.show', compact("product",
-            "gallery", "related", "recentlyViewed", "breadCrumbs", "currencyWidget", "currency", "menu", "cartSum"));
+            "gallery", "related", "recentlyViewed", "breadCrumbs", "currencyWidget", "currency", "menu", "cart"));
     }
 }

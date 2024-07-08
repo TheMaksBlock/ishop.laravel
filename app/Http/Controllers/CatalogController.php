@@ -83,7 +83,7 @@ class CatalogController extends Controller {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        $cartSum = $this->cartService->getCartSum();
+        $cart = $this->cartService->getCart();
         $partial = $request->ajax();
 
         if ($partial) {
@@ -91,6 +91,6 @@ class CatalogController extends Controller {
         }
 
         return view('catalog.show', compact("products", "breadCrumbs", "currencyWidget", "currency",
-            "menu", "cartSum", "filterMenu", "partial", "searchQuery"));
+            "menu", "cart", "filterMenu", "partial", "searchQuery"));
     }
 }

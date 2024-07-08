@@ -19,7 +19,7 @@ class CurrencyController extends Controller {
             $curr = $this->currencyService->getCurrencies();
             if (!empty($curr[$code])) {
                 Cache::put('Currency', $curr[$code], 60 * 24);
-                CartService::recalc();
+                /*CartService::recalc();*/
             }
         }
         return back();

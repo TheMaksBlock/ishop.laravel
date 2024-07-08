@@ -29,7 +29,7 @@ class MainController extends Controller {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        $cartSum = $this->cartService->getCartSum();
-        return view('main.index', compact("hits", "currencyWidget", "currency", "menu", "cartSum"));
+        $cart = $this->cartService->getCart();
+        return view('main.index', compact("hits", "currencyWidget", "currency", "menu", "cart"));
     }
 }

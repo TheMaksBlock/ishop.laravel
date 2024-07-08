@@ -13,7 +13,8 @@ class CacheService {
                 "admin_cat" => "Меню категорий администратора",
                 "admin_select" => "Меню выбора родительской категории"],
         "Данные" =>
-            ["cats" => "Категории"
+            ["cats" => "Категории",
+                "currencys" => "Валюты"
         ]];
 
     private static $link = "admin.cache.forget";

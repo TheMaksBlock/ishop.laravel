@@ -48,9 +48,9 @@
                     <a href="{{ route('cart.index')}}" onclick="getCart(); return false">
                         <div class="total">
                             <img src="{{ asset('images/cart-1.png')}}" alt="">
-                            @if($cartSum)
+                            @if($cart["sum"])
                                 <span
-                                    class="simpleCart_total ">{{$currency['symbol_left'].$cartSum .$currency['symbol_right']}}</span>
+                                    class="simpleCart_total ">{{$currency['symbol_left'].$cart["sum"] .$currency['symbol_right']}}</span>
                             @else
                                 <span class="simpleCart_total ">Корзина пуста</span>
                             @endif

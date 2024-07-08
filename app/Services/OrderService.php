@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderService {
     public function saveOrder($note, $currency) {
-        $products = CartService::getCartProducts();
+        $products = (new CartService())->getCart();
         if (!$products) {
             return null;
         }

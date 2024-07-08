@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLogined;
 use App\Services\CartService;
 use App\Services\CategoriesMenuService;
 use App\Services\CurrencyService;
@@ -25,14 +26,15 @@ class LoginController extends Controller {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        $cartSum = $this->cartService->getCartSum();
-        return view('user.login', compact("currencyWidget", "currency", "menu", "cartSum"));
+        $cart = $this->cartService->getCart();
+        return view('user.login', compact("currencyWidget", "currency", "menu","cart"));
     }
 
     public function login(Request $request) {
         $credentials = $request->only('login', 'password');
 
         if (Auth::attempt($credentials)) {
+            event(new UserLogined(Auth::user()->id));
             return redirect()->route('main.index');
         }
 

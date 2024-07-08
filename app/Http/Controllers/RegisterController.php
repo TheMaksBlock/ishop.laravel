@@ -27,8 +27,8 @@ class RegisterController extends Controller {
         $currencyWidget = $this->currencyService->getHtml();
         $currency = $this->currencyService->currency;
         $menu = $this->categoriesMenuService->get();
-        $cartSum = $this->cartService->getCartSum();
-        return view('user.register', compact("currencyWidget", "currency", "menu", "cartSum"));
+        $cart = $this->cartService->getCart();
+        return view('user.register', compact("currencyWidget", "currency", "menu", "cart"));
     }
 
     public function create(Request $request) {
