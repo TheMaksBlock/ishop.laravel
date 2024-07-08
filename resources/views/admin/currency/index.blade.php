@@ -40,7 +40,7 @@
                                         <td>{{$currency["value"]}}</td>
                                         <td>
                                             <a href="{{route("admin.currency.edit", [$currency["id"]])}}"><i class="fa fa-fw fa-pencil"></i></a>
-                                            {{--<a class="delete" href="<?=ADMIN;?>/currency/delete?id=<?=$currency->id;?>"><i class="fa fa-fw fa-close text-danger"></i></a>--}}
+                                            <a class="delete" href="{{route("admin.currency.destroy", [$currency["id"]])}}"><i class="fa fa-fw fa-close text-danger"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

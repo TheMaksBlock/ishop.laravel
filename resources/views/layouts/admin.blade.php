@@ -102,8 +102,8 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{route('admin.products.index')}}">Список валют</a></li>
-                        <li><a href="{{route('admin.product.create')}}">Добавить валюту</a></li>
+                        <li><a href="{{route('admin.currency.index')}}">Список валют</a></li>
+                        <li><a href="{{route('admin.currency.create')}}">Добавить валюту</a></li>
                     </ul>
             </ul>
         </section>
